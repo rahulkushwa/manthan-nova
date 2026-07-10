@@ -39,25 +39,21 @@ const links = [
 
 export default function Sidebar() {
   return (
-    <aside className="hidden w-72 flex-col border-r bg-slate-950 text-white lg:flex">
-
-      {/* Logo */}
+    <aside className="hidden w-72 flex-col bg-slate-950 lg:flex">
 
       <div className="border-b border-white/10 p-8">
 
-        <h1 className="text-3xl font-black">
+        <h1 className="text-3xl font-black text-white">
           Manthan Nova
         </h1>
 
-        <p className="mt-2 text-sm text-slate-400">
+        <p className="mt-2 text-slate-400">
           Student Portal
         </p>
 
       </div>
 
-      {/* Menu */}
-
-      <nav className="flex-1 space-y-2 p-6">
+      <nav className="flex-1 space-y-3 p-6">
 
         {links.map((item) => {
 
@@ -69,13 +65,14 @@ export default function Sidebar() {
               key={item.title}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center gap-4 rounded-2xl px-5 py-4 transition ${
+                `flex items-center gap-4 rounded-2xl px-5 py-4 font-medium transition ${
                   isActive
-                    ? "bg-blue-600 text-white"
+                    ? "bg-blue-600 text-white shadow-lg"
                     : "text-slate-400 hover:bg-slate-800 hover:text-white"
                 }`
               }
             >
+
               <Icon size={22} />
 
               {item.title}
@@ -87,8 +84,6 @@ export default function Sidebar() {
         })}
 
       </nav>
-
-      {/* Logout */}
 
       <div className="border-t border-white/10 p-6">
 

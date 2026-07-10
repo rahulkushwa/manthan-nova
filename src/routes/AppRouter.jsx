@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 
 import MainLayout from "../layouts/MainLayout";
+import DashboardLayout from "../layouts/DashboardLayout";
 import ProtectedRoute from "./ProtectedRoute";
 
 // Public Pages
@@ -43,15 +44,17 @@ const router = createBrowserRouter(
       {/* Authentication */}
       <Route path="/login" element={<Login />} />
 
-      {/* Student */}
-     <Route
-  path="/dashboard"
-  element={
-    <ProtectedRoute>
-      <Dashboard />
-    </ProtectedRoute>
-  }
-/>
+      {/* Student Dashboard */}
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <DashboardLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<Dashboard />} />
+      </Route>
     </>
   )
 );

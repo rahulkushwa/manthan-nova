@@ -10,7 +10,7 @@ export const siteConfig = {
 
   email: "",
 
-  whatsapp: "91 9064911725",
+  whatsapp: "919064911725",
 
   classes: "Classes VI–X",
 

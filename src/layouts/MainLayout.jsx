@@ -1,17 +1,28 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import SmoothScroll from "../components/common/SmoothScroll";
+import MouseGlow from "../components/common/MouseGlow";
 
-const MainLayout = () => {
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "instant",
+    });
+  }, [pathname]);
+
+  return null;
+}
+
+export default function MainLayout() {
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* Navbar will come here */}
-
-      <main>
-        <Outlet />
-      </main>
-
-      {/* Footer will come here */}
-    </div>
+    <>
+      <MouseGlow />
+      <SmoothScroll />
+      <ScrollToTop />
+      <Outlet />
+    </>
   );
-};
-
-export default MainLayout;
+}

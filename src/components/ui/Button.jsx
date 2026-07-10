@@ -1,34 +1,54 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function Button({
   children,
   to,
   variant = "primary",
 }) {
-  const styles = {
-    primary:
-      "bg-blue-700 text-white hover:bg-blue-800",
+  const primary =
+    "relative overflow-hidden rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 px-7 py-3 font-semibold text-slate-900 shadow-lg";
 
-    secondary:
-      "border border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white",
-  };
+  const secondary =
+    "relative overflow-hidden rounded-xl border border-white/20 bg-white/10 px-7 py-3 font-semibold text-white backdrop-blur";
+
+  const content = (
+    <motion.div
+      whileHover={{
+        scale: 1.04,
+        y: -2,
+      }}
+      whileTap={{
+        scale: 0.97,
+      }}
+      transition={{
+        duration: 0.2,
+      }}
+      className={variant === "primary" ? primary : secondary}
+    >
+      <span className="relative z-10 flex items-center justify-center gap-2">
+        {children}
+      </span>
+
+      <motion.div
+        initial={{
+          x: "-120%",
+        }}
+        whileHover={{
+          x: "220%",
+        }}
+        transition={{
+          duration: 0.8,
+          ease: "easeInOut",
+        }}
+        className="absolute inset-y-0 w-16 rotate-12 bg-white/40 blur-md"
+      />
+    </motion.div>
+  );
 
   if (to) {
-    return (
-      <Link
-        to={to}
-        className={`inline-flex items-center justify-center rounded-xl px-6 py-3 font-semibold transition duration-300 ${styles[variant]}`}
-      >
-        {children}
-      </Link>
-    );
+    return <Link to={to}>{content}</Link>;
   }
 
-  return (
-    <button
-      className={`inline-flex items-center justify-center rounded-xl px-6 py-3 font-semibold transition duration-300 ${styles[variant]}`}
-    >
-      {children}
-    </button>
-  );
+  return <button>{content}</button>;
 }

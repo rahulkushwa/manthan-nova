@@ -1,4 +1,4 @@
-import Container from "./Container";
+import clsx from "clsx";
 
 export default function Section({
   children,
@@ -6,8 +6,14 @@ export default function Section({
   background = "bg-white",
 }) {
   return (
-    <section className={`${background} py-20 lg:py-28 ${className}`}>
-      <Container>{children}</Container>
+    <section
+      className={clsx(
+        "relative overflow-hidden py-24 lg:py-32",
+        background,
+        className
+      )}
+    >
+      {children}
     </section>
   );
 }

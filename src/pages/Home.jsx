@@ -1,11 +1,15 @@
-const Home = () => {
-  return (
-    <div className="p-10">
-      <h1 className="text-4xl font-bold text-yellow-400">
-        Home Page
-      </h1>
-    </div>
-  );
-};
+import Navbar from "../components/layout/Navbar";
+import Hero from "../components/home/Hero";
+import Stats from "../components/home/Stats";
+import Features from "../components/home/Features";
 
-export default Home;
+export default function Home() {
+  return (
+    <>
+      <Navbar />
+      <Hero />
+      <Stats />
+      <Features />
+    </>
+  );
+}

@@ -1,5 +1,9 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+
+import Navbar from "../components/layout/Navbar";
+import Footer from "../components/layout/Footer";
+import WhatsAppButton from "../components/common/WhatsAppButton";
 import SmoothScroll from "../components/common/SmoothScroll";
 import MouseGlow from "../components/common/MouseGlow";
 
@@ -22,7 +26,14 @@ export default function MainLayout() {
       <MouseGlow />
       <SmoothScroll />
       <ScrollToTop />
+
+      <Navbar />
+
       <Outlet />
+
+      <Footer />
+
+      <WhatsAppButton />
     </>
   );
 }

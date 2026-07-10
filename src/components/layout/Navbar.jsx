@@ -69,10 +69,16 @@ export default function Navbar() {
 
             {/* Logo */}
 
-            <Link to="/" className="leading-none">
+            <Link
+              to="/"
+              className="flex flex-col"
+            >
 
               <h1
-                className={`text-2xl font-extrabold tracking-tight transition ${
+                style={{
+                  letterSpacing: "-0.04em",
+                }}
+                className={`text-2xl font-extrabold transition ${
                   darkNavbar
                     ? "text-blue-900"
                     : "text-white"
@@ -93,7 +99,7 @@ export default function Navbar() {
 
             </Link>
 
-            {/* Desktop */}
+            {/* Desktop Navigation */}
 
             <nav className="hidden items-center gap-9 lg:flex">
 
@@ -122,14 +128,15 @@ export default function Navbar() {
                       {isActive && (
                         <motion.div
                           layoutId="active-nav"
-                          className="absolute -bottom-2 left-0 h-[3px] w-full rounded-full bg-amber-400"
                           transition={{
                             type: "spring",
                             stiffness: 350,
                             damping: 28,
                           }}
+                          className="absolute -bottom-2 left-0 h-[3px] w-full rounded-full bg-amber-400"
                         />
                       )}
+
                     </>
                   )}
 
@@ -139,13 +146,20 @@ export default function Navbar() {
 
             </nav>
 
-            {/* Right */}
+            {/* Desktop Button */}
 
-            <div className="hidden lg:block">
+            <motion.div
+              whileHover={{
+                scale: 1.02,
+              }}
+              className="hidden lg:block"
+            >
+
               <Button to="/admission">
                 Book Free Demo
               </Button>
-            </div>
+
+            </motion.div>
 
             {/* Mobile */}
 

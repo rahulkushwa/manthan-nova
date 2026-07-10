@@ -5,8 +5,9 @@ import {
 } from "react-router-dom";
 
 import MainLayout from "../layouts/MainLayout";
+import ProtectedRoute from "./ProtectedRoute";
 
-// Pages
+// Public Pages
 import Home from "../pages/Home";
 import About from "../pages/About";
 import Courses from "../pages/Courses";
@@ -17,19 +18,41 @@ import Admission from "../pages/Admission";
 import Contact from "../pages/Contact";
 import NotFound from "../pages/NotFound";
 
+// Auth
+import Login from "../pages/auth/Login";
+
+// Student
+import Dashboard from "../pages/student/Dashboard";
+
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<MainLayout />}>
-      <Route index element={<Home />} />
-      <Route path="about" element={<About />} />
-      <Route path="courses" element={<Courses />} />
-      <Route path="testimonials" element={<Testimonials />} />
-      <Route path="notes" element={<Notes />} />
-      <Route path="faq" element={<FAQ />} />
-      <Route path="admission" element={<Admission />} />
-      <Route path="contact" element={<Contact />} />
-      <Route path="*" element={<NotFound />} />
-    </Route>
+    <>
+      {/* Public Website */}
+      <Route path="/" element={<MainLayout />}>
+        <Route index element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route path="courses" element={<Courses />} />
+        <Route path="testimonials" element={<Testimonials />} />
+        <Route path="notes" element={<Notes />} />
+        <Route path="faq" element={<FAQ />} />
+        <Route path="admission" element={<Admission />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+
+      {/* Authentication */}
+      <Route path="/login" element={<Login />} />
+
+      {/* Student */}
+     <Route
+  path="/dashboard"
+  element={
+    <ProtectedRoute>
+      <Dashboard />
+    </ProtectedRoute>
+  }
+/>
+    </>
   )
 );
 

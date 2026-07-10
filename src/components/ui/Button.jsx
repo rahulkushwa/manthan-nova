@@ -6,17 +6,19 @@ export default function Button({
   to,
   variant = "primary",
 }) {
-  const primary =
-    "relative overflow-hidden rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 px-7 py-3 font-semibold text-slate-900 shadow-lg";
+  const styles = {
+    primary:
+      "group relative overflow-hidden rounded-2xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-400 px-8 py-3.5 font-semibold text-slate-900 shadow-[0_12px_30px_rgba(245,158,11,.35)]",
 
-  const secondary =
-    "relative overflow-hidden rounded-xl border border-white/20 bg-white/10 px-7 py-3 font-semibold text-white backdrop-blur";
+    secondary:
+      "group relative overflow-hidden rounded-2xl border border-white/25 bg-white/10 px-8 py-3.5 font-semibold text-white backdrop-blur-xl",
+  };
 
   const content = (
     <motion.div
       whileHover={{
-        scale: 1.04,
-        y: -2,
+        y: -3,
+        scale: 1.03,
       }}
       whileTap={{
         scale: 0.97,
@@ -24,25 +26,30 @@ export default function Button({
       transition={{
         duration: 0.2,
       }}
-      className={variant === "primary" ? primary : secondary}
+      className={styles[variant]}
     >
-      <span className="relative z-10 flex items-center justify-center gap-2">
-        {children}
-      </span>
+      {/* Hover Glow */}
+
+      <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/25 to-white/10 opacity-0 transition duration-500 group-hover:opacity-100" />
+
+      {/* Shine */}
 
       <motion.div
         initial={{
-          x: "-120%",
+          x: "-160%",
         }}
         whileHover={{
           x: "220%",
         }}
         transition={{
           duration: 0.8,
-          ease: "easeInOut",
         }}
-        className="absolute inset-y-0 w-16 rotate-12 bg-white/40 blur-md"
+        className="absolute top-0 h-full w-14 rotate-12 bg-white/40 blur-lg"
       />
+
+      <span className="relative z-10 flex items-center justify-center gap-2">
+        {children}
+      </span>
     </motion.div>
   );
 
@@ -50,5 +57,9 @@ export default function Button({
     return <Link to={to}>{content}</Link>;
   }
 
-  return <button>{content}</button>;
+  return (
+    <button type="button">
+      {content}
+    </button>
+  );
 }

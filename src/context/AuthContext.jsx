@@ -6,19 +6,30 @@ import {
 } from "react";
 
 import { onAuthStateChanged } from "firebase/auth";
+
 import auth from "../firebase/auth";
+import { getUser } from "../services/userService";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(
       auth,
-      (currentUser) => {
+      async (currentUser) => {
         setUser(currentUser);
+
+        if (currentUser) {
+          const userProfile = await getUser(currentUser.uid);
+          setProfile(userProfile);
+        } else {
+          setProfile(null);
+        }
+
         setLoading(false);
       }
     );
@@ -30,6 +41,8 @@ export function AuthProvider({ children }) {
     <AuthContext.Provider
       value={{
         user,
+        profile,
+        loading,
       }}
     >
       {!loading && children}

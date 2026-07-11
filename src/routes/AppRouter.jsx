@@ -31,11 +31,17 @@ import StudentNotes from "../pages/student/Notes";
 import AdminDashboard from "../pages/admin/Dashboard";
 import UploadNotes from "../pages/admin/UploadNotes";
 import ManageNotes from "../pages/admin/ManageNotes";
+import EditNote from "../pages/admin/EditNote";
+
+import AddStudent from "../pages/admin/AddStudent";
+import ManageStudents from "../pages/admin/ManageStudents";
+import EditStudent from "../pages/admin/EditStudent";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      {/* Public Website */}
+      {/* ================= PUBLIC WEBSITE ================= */}
+
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
@@ -48,10 +54,12 @@ const router = createBrowserRouter(
         <Route path="*" element={<NotFound />} />
       </Route>
 
-      {/* Login */}
+      {/* ================= LOGIN ================= */}
+
       <Route path="/login" element={<Login />} />
 
-      {/* Student Dashboard */}
+      {/* ================= STUDENT DASHBOARD ================= */}
+
       <Route
         path="/dashboard"
         element={
@@ -61,10 +69,15 @@ const router = createBrowserRouter(
         }
       >
         <Route index element={<Dashboard />} />
-        <Route path="notes" element={<StudentNotes />} />
+
+        <Route
+          path="notes"
+          element={<StudentNotes />}
+        />
       </Route>
 
-      {/* Admin Dashboard */}
+      {/* ================= ADMIN DASHBOARD ================= */}
+
       <Route
         path="/admin"
         element={
@@ -73,9 +86,43 @@ const router = createBrowserRouter(
           </ProtectedRoute>
         }
       >
-        <Route index element={<AdminDashboard />} />
-        <Route path="upload-notes" element={<UploadNotes />} />
-        <Route path="manage-notes" element={<ManageNotes />} />
+        {/* Dashboard */}
+        <Route
+          index
+          element={<AdminDashboard />}
+        />
+
+        {/* Notes */}
+        <Route
+          path="upload-notes"
+          element={<UploadNotes />}
+        />
+
+        <Route
+          path="manage-notes"
+          element={<ManageNotes />}
+        />
+
+        <Route
+          path="edit-note/:id"
+          element={<EditNote />}
+        />
+
+        {/* Students */}
+        <Route
+          path="add-student"
+          element={<AddStudent />}
+        />
+
+        <Route
+          path="manage-students"
+          element={<ManageStudents />}
+        />
+
+        <Route
+          path="edit-student/:id"
+          element={<EditStudent />}
+        />
       </Route>
     </>
   )

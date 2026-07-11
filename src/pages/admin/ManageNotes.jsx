@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FileText, Trash2, Pencil } from "lucide-react";
 import { deleteDoc, doc } from "firebase/firestore";
 
@@ -6,6 +7,8 @@ import { db } from "../../firebase/firestore";
 import { getNotes } from "../../services/studentNotesService";
 
 export default function ManageNotes() {
+  const navigate = useNavigate();
+
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -95,7 +98,10 @@ export default function ManageNotes() {
 
               <div className="mt-6 flex gap-3">
                 <button
-                  className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-amber-500 px-4 py-3 font-semibold text-white"
+                  onClick={() =>
+                    navigate(`/admin/edit-note/${note.id}`)
+                  }
+                  className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-amber-500 px-4 py-3 font-semibold text-white hover:bg-amber-600"
                 >
                   <Pencil size={18} />
                   Edit

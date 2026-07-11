@@ -9,6 +9,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 import { login } from "../../firebase/authService";
+import { getUser } from "../../services/userService";
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -35,13 +36,30 @@ export default function LoginForm() {
 
       const userCredential = await login(email, password);
 
-      const user = userCredential.user;
+      const firebaseUser = userCredential.user;
 
-      // Temporary Admin Check
-      if (user.email === "rahulkushrnj@gmail.com") {
-        navigate("/admin");
-      } else {
-        navigate("/dashboard");
+      const user = await getUser(firebaseUser.uid);
+
+      if (!user) {
+        setError("User profile not found.");
+        return;
+      }
+
+      switch (user.role) {
+        case "admin":
+          navigate("/admin");
+          break;
+
+        case "student":
+          navigate("/dashboard");
+          break;
+
+        case "teacher":
+          navigate("/teacher");
+          break;
+
+        default:
+          setError("Invalid user role.");
       }
     } catch (err) {
       switch (err.code) {
@@ -74,18 +92,13 @@ export default function LoginForm() {
       onSubmit={handleSubmit}
       className="mt-10 space-y-6"
     >
-      {/* Email */}
-
       <div>
         <label className="mb-2 block text-sm font-medium text-slate-300">
           Email Address
         </label>
 
         <div className="flex items-center rounded-2xl border border-white/15 bg-white/10 px-4 backdrop-blur">
-          <Mail
-            size={18}
-            className="text-slate-400"
-          />
+          <Mail size={18} className="text-slate-400" />
 
           <input
             type="email"
@@ -97,18 +110,13 @@ export default function LoginForm() {
         </div>
       </div>
 
-      {/* Password */}
-
       <div>
         <label className="mb-2 block text-sm font-medium text-slate-300">
           Password
         </label>
 
         <div className="flex items-center rounded-2xl border border-white/15 bg-white/10 px-4 backdrop-blur">
-          <Lock
-            size={18}
-            className="text-slate-400"
-          />
+          <Lock size={18} className="text-slate-400" />
 
           <input
             type={showPassword ? "text" : "password"}
@@ -123,40 +131,19 @@ export default function LoginForm() {
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? (
-              <EyeOff
-                size={20}
-                className="text-slate-400"
-              />
+              <EyeOff size={20} className="text-slate-400" />
             ) : (
-              <Eye
-                size={20}
-                className="text-slate-400"
-              />
+              <Eye size={20} className="text-slate-400" />
             )}
           </button>
         </div>
       </div>
-
-      {/* Error */}
 
       {error && (
         <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-300">
           {error}
         </div>
       )}
-
-      {/* Forgot Password */}
-
-      <div className="flex justify-end">
-        <button
-          type="button"
-          className="text-sm text-amber-400 hover:text-amber-300"
-        >
-          Forgot Password?
-        </button>
-      </div>
-
-      {/* Login Button */}
 
       <button
         type="submit"
@@ -165,10 +152,7 @@ export default function LoginForm() {
       >
         {loading ? (
           <>
-            <Loader2
-              className="mr-2 animate-spin"
-              size={20}
-            />
+            <Loader2 className="mr-2 animate-spin" size={20} />
             Signing In...
           </>
         ) : (

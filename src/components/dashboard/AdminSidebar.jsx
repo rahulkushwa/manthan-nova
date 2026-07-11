@@ -2,6 +2,7 @@ import {
   LayoutDashboard,
   BookOpen,
   FileText,
+  UserPlus,
   Users,
   UserCog,
   Bell,
@@ -28,8 +29,13 @@ const links = [
     icon: FileText,
   },
   {
-    title: "Students",
-    path: "/admin/students",
+    title: "Add Student",
+    path: "/admin/add-student",
+    icon: UserPlus,
+  },
+  {
+    title: "Manage Students",
+    path: "/admin/manage-students",
     icon: Users,
   },
   {

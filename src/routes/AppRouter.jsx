@@ -6,6 +6,7 @@ import {
 
 import MainLayout from "../layouts/MainLayout";
 import DashboardLayout from "../layouts/DashboardLayout";
+import AdminLayout from "../layouts/AdminLayout";
 import ProtectedRoute from "./ProtectedRoute";
 
 // Public Pages
@@ -24,6 +25,12 @@ import Login from "../pages/auth/Login";
 
 // Student
 import Dashboard from "../pages/student/Dashboard";
+import StudentNotes from "../pages/student/Notes";
+
+// Admin
+import AdminDashboard from "../pages/admin/Dashboard";
+import UploadNotes from "../pages/admin/UploadNotes";
+import ManageNotes from "../pages/admin/ManageNotes";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -41,7 +48,7 @@ const router = createBrowserRouter(
         <Route path="*" element={<NotFound />} />
       </Route>
 
-      {/* Authentication */}
+      {/* Login */}
       <Route path="/login" element={<Login />} />
 
       {/* Student Dashboard */}
@@ -54,6 +61,21 @@ const router = createBrowserRouter(
         }
       >
         <Route index element={<Dashboard />} />
+        <Route path="notes" element={<StudentNotes />} />
+      </Route>
+
+      {/* Admin Dashboard */}
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute>
+            <AdminLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<AdminDashboard />} />
+        <Route path="upload-notes" element={<UploadNotes />} />
+        <Route path="manage-notes" element={<ManageNotes />} />
       </Route>
     </>
   )

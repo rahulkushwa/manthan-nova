@@ -1,8 +1,13 @@
 import { useState } from "react";
-import { Eye, EyeOff, Lock, Mail, Loader2 } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  Lock,
+  Mail,
+  Loader2,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-import Button from "../ui/Button";
 import { login } from "../../firebase/authService";
 
 export default function LoginForm() {
@@ -28,9 +33,16 @@ export default function LoginForm() {
     try {
       setLoading(true);
 
-      await login(email, password);
+      const userCredential = await login(email, password);
 
-      navigate("/dashboard");
+      const user = userCredential.user;
+
+      // Temporary Admin Check
+      if (user.email === "rahulkushrnj@gmail.com") {
+        navigate("/admin");
+      } else {
+        navigate("/dashboard");
+      }
     } catch (err) {
       switch (err.code) {
         case "auth/user-not-found":
@@ -108,9 +120,7 @@ export default function LoginForm() {
 
           <button
             type="button"
-            onClick={() =>
-              setShowPassword(!showPassword)
-            }
+            onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? (
               <EyeOff
@@ -135,18 +145,18 @@ export default function LoginForm() {
         </div>
       )}
 
-      {/* Forgot */}
+      {/* Forgot Password */}
 
       <div className="flex justify-end">
         <button
           type="button"
-          className="text-sm text-amber-400 transition hover:text-amber-300"
+          className="text-sm text-amber-400 hover:text-amber-300"
         >
           Forgot Password?
         </button>
       </div>
 
-      {/* Login */}
+      {/* Login Button */}
 
       <button
         type="submit"

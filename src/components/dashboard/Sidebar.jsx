@@ -39,7 +39,9 @@ const links = [
 
 export default function Sidebar() {
   return (
-    <aside className="hidden w-72 flex-col bg-slate-950 lg:flex">
+    <aside className="sticky top-0 hidden h-screen w-72 flex-col bg-slate-950 lg:flex">
+
+      {/* Logo */}
 
       <div className="border-b border-white/10 p-8">
 
@@ -53,7 +55,9 @@ export default function Sidebar() {
 
       </div>
 
-      <nav className="flex-1 space-y-3 p-6">
+      {/* Navigation */}
+
+      <nav className="flex-1 overflow-y-auto space-y-3 p-6">
 
         {links.map((item) => {
 
@@ -84,6 +88,8 @@ export default function Sidebar() {
         })}
 
       </nav>
+
+      {/* Logout */}
 
       <div className="border-t border-white/10 p-6">
 

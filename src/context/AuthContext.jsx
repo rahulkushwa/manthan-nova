@@ -21,10 +21,17 @@ export function AuthProvider({ children }) {
     const unsubscribe = onAuthStateChanged(
       auth,
       async (currentUser) => {
+        console.log("Firebase User:", currentUser);
+
         setUser(currentUser);
 
         if (currentUser) {
+          console.log("Firebase UID:", currentUser.uid);
+
           const userProfile = await getUser(currentUser.uid);
+
+          console.log("Firestore Profile:", userProfile);
+
           setProfile(userProfile);
         } else {
           setProfile(null);

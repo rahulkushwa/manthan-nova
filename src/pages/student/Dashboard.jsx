@@ -74,13 +74,11 @@ const recentNotes = [
 export default function Dashboard() {
   const { profile } = useAuth();
 
+  console.log("Dashboard Profile:", profile);
+
   return (
     <div className="min-h-screen bg-slate-100 p-8">
-
-      {/* Hero */}
-
       <div className="rounded-3xl bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 p-10 text-white shadow-2xl">
-
         <h1 className="text-5xl font-black">
           Welcome Back {profile?.name || "Student"} 👋
         </h1>
@@ -90,11 +88,8 @@ export default function Dashboard() {
         </p>
 
         <div className="mt-8 flex flex-wrap gap-4">
-
           <div className="rounded-xl bg-white/10 px-5 py-3 backdrop-blur">
-            <p className="text-sm text-blue-200">
-              Class
-            </p>
+            <p className="text-sm text-blue-200">Class</p>
 
             <h3 className="text-xl font-bold">
               {profile?.class || "-"}
@@ -102,48 +97,32 @@ export default function Dashboard() {
           </div>
 
           <div className="rounded-xl bg-white/10 px-5 py-3 backdrop-blur">
-            <p className="text-sm text-blue-200">
-              Board
-            </p>
+            <p className="text-sm text-blue-200">Board</p>
 
             <h3 className="text-xl font-bold">
               {profile?.board || "-"}
             </h3>
           </div>
-
         </div>
-
       </div>
 
-      {/* Quick Access */}
-
       <div className="mt-10">
-
-        <h2 className="mb-6 text-3xl font-bold">
-          Quick Access
-        </h2>
+        <h2 className="mb-6 text-3xl font-bold">Quick Access</h2>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-
           {cards.map((card) => {
-
             const Icon = card.icon;
 
             return (
-
               <Link
                 key={card.title}
                 to={card.path}
                 className="group rounded-3xl bg-white p-6 shadow-lg transition hover:-translate-y-2 hover:shadow-2xl"
               >
-
                 <div
                   className={`flex h-16 w-16 items-center justify-center rounded-2xl ${card.color}`}
                 >
-                  <Icon
-                    size={30}
-                    className="text-white"
-                  />
+                  <Icon size={30} className="text-white" />
                 </div>
 
                 <h3 className="mt-6 text-2xl font-bold">
@@ -156,62 +135,41 @@ export default function Dashboard() {
 
                 <div className="mt-6 flex items-center gap-2 font-semibold text-blue-600">
                   Open
-
                   <ArrowRight
                     size={18}
                     className="transition group-hover:translate-x-2"
                   />
                 </div>
-
               </Link>
-
             );
-
           })}
-
         </div>
-
       </div>
 
-      {/* Recent Notes */}
-
       <div className="mt-12 rounded-3xl bg-white p-8 shadow-lg">
-
         <h2 className="mb-6 text-3xl font-bold">
           Recent Notes
         </h2>
 
         <div className="space-y-4">
-
           {recentNotes.map((note) => (
-
             <div
               key={note.title}
               className="flex items-center justify-between rounded-2xl border p-5 transition hover:bg-slate-50"
             >
-
               <div>
-
-                <h3 className="font-bold">
-                  {note.title}
-                </h3>
+                <h3 className="font-bold">{note.title}</h3>
 
                 <p className="text-slate-500">
                   {note.subject}
                 </p>
-
               </div>
 
               <BookOpen className="text-blue-600" />
-
             </div>
-
           ))}
-
         </div>
-
       </div>
-
     </div>
   );
 }

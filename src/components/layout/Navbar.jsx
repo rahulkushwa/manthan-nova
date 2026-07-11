@@ -47,9 +47,7 @@ export default function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-5 z-50">
-
       <Container>
-
         <motion.div
           animate={{
             scale: scrolled ? 0.985 : 1,
@@ -64,24 +62,16 @@ export default function Navbar() {
               : "border-white/15 bg-white/10 backdrop-blur-xl"
           }`}
         >
-
           <div className="flex h-20 items-center justify-between px-7">
-
             {/* Logo */}
 
-            <Link
-              to="/"
-              className="flex flex-col"
-            >
-
+            <Link to="/" className="flex flex-col">
               <h1
                 style={{
                   letterSpacing: "-0.04em",
                 }}
                 className={`text-2xl font-extrabold transition ${
-                  darkNavbar
-                    ? "text-blue-900"
-                    : "text-white"
+                  darkNavbar ? "text-blue-900" : "text-white"
                 }`}
               >
                 {siteConfig.name}
@@ -89,22 +79,17 @@ export default function Navbar() {
 
               <p
                 className={`mt-1 text-[11px] font-semibold uppercase tracking-[0.35em] transition ${
-                  darkNavbar
-                    ? "text-amber-600"
-                    : "text-amber-300"
+                  darkNavbar ? "text-amber-600" : "text-amber-300"
                 }`}
               >
                 {siteConfig.tagline}
               </p>
-
             </Link>
 
             {/* Desktop Navigation */}
 
             <nav className="hidden items-center gap-9 lg:flex">
-
               {navLinks.map((item) => (
-
                 <NavLink
                   key={item.path}
                   to={item.path}
@@ -120,7 +105,6 @@ export default function Navbar() {
                     }`
                   }
                 >
-
                   {({ isActive }) => (
                     <>
                       {item.name}
@@ -136,29 +120,21 @@ export default function Navbar() {
                           className="absolute -bottom-2 left-0 h-[3px] w-full rounded-full bg-amber-400"
                         />
                       )}
-
                     </>
                   )}
-
                 </NavLink>
-
               ))}
-
             </nav>
 
-            {/* Desktop Button */}
+            {/* Desktop Login Button */}
 
             <motion.div
-              whileHover={{
-                scale: 1.02,
-              }}
+              whileHover={{ scale: 1.02 }}
               className="hidden lg:block"
             >
-
-              <Button to="/admission">
-                Book Free Demo
+              <Button to="/login">
+                Student Login
               </Button>
-
             </motion.div>
 
             {/* Mobile */}
@@ -166,22 +142,16 @@ export default function Navbar() {
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className={`lg:hidden ${
-                darkNavbar
-                  ? "text-slate-900"
-                  : "text-white"
+                darkNavbar ? "text-slate-900" : "text-white"
               }`}
             >
               {menuOpen ? <X size={30} /> : <Menu size={30} />}
             </button>
-
           </div>
-
         </motion.div>
 
         <AnimatePresence>
-
           {menuOpen && (
-
             <motion.div
               initial={{
                 opacity: 0,
@@ -200,11 +170,8 @@ export default function Navbar() {
               }}
               className="mt-3 overflow-hidden rounded-2xl border border-white/20 bg-white/95 shadow-2xl backdrop-blur-2xl lg:hidden"
             >
-
               <div className="flex flex-col gap-5 p-6">
-
                 {navLinks.map((item) => (
-
                   <NavLink
                     key={item.path}
                     to={item.path}
@@ -213,23 +180,19 @@ export default function Navbar() {
                   >
                     {item.name}
                   </NavLink>
-
                 ))}
 
-                <Button to="/admission">
-                  Book Free Demo
+                <Button
+                  to="/login"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Student Login
                 </Button>
-
               </div>
-
             </motion.div>
-
           )}
-
         </AnimatePresence>
-
       </Container>
-
     </header>
   );
 }

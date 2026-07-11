@@ -3,6 +3,7 @@ import {
   getDocs,
   orderBy,
   query,
+  where,
   doc,
   getDoc,
   updateDoc,
@@ -10,7 +11,11 @@ import {
 
 import { db } from "../firebase/firestore";
 
-export async function getNotes() {
+/* ---------------------- */
+/* ADMIN - ALL NOTES */
+/* ---------------------- */
+
+export async function getAllNotes() {
   const q = query(
     collection(db, "notes"),
     orderBy("uploadedAt", "desc")
@@ -23,6 +28,27 @@ export async function getNotes() {
     ...doc.data(),
   }));
 }
+
+/* ---------------------- */
+/* STUDENT NOTES */
+/* ---------------------- */
+
+export async function getNotes(studentClass) {
+  const q = query(
+    collection(db, "notes"),
+    where("class", "==", studentClass),
+    orderBy("uploadedAt", "desc")
+  );
+
+  const snapshot = await getDocs(q);
+
+  return snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+}
+
+/* ---------------------- */
 
 export async function getNote(id) {
   const snapshot = await getDoc(doc(db, "notes", id));

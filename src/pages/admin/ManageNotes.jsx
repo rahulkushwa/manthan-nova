@@ -4,7 +4,7 @@ import { FileText, Trash2, Pencil } from "lucide-react";
 import { deleteDoc, doc } from "firebase/firestore";
 
 import { db } from "../../firebase/firestore";
-import { getNotes } from "../../services/studentNotesService";
+import { getAllNotes } from "../../services/studentNotesService";
 
 export default function ManageNotes() {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ export default function ManageNotes() {
 
   async function loadNotes() {
     try {
-      const data = await getNotes();
+      const data = await getAllNotes();
       setNotes(data);
     } catch (error) {
       console.error(error);
@@ -71,7 +71,7 @@ export default function ManageNotes() {
           {notes.map((note) => (
             <div
               key={note.id}
-              className="rounded-3xl bg-white p-6 shadow-lg"
+              className="rounded-3xl bg-white p-6 shadow-lg transition hover:-translate-y-1 hover:shadow-xl"
             >
               <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-600">
                 <FileText
@@ -101,7 +101,7 @@ export default function ManageNotes() {
                   onClick={() =>
                     navigate(`/admin/edit-note/${note.id}`)
                   }
-                  className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-amber-500 px-4 py-3 font-semibold text-white hover:bg-amber-600"
+                  className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-amber-500 px-4 py-3 font-semibold text-white transition hover:bg-amber-600"
                 >
                   <Pencil size={18} />
                   Edit
@@ -109,7 +109,7 @@ export default function ManageNotes() {
 
                 <button
                   onClick={() => handleDelete(note.id)}
-                  className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-red-600 px-4 py-3 font-semibold text-white hover:bg-red-700"
+                  className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-red-600 px-4 py-3 font-semibold text-white transition hover:bg-red-700"
                 >
                   <Trash2 size={18} />
                   Delete

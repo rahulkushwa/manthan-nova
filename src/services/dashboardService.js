@@ -10,30 +10,36 @@ import {
 import { db } from "../firebase/firestore";
 
 export async function getDashboardStats() {
-  const notesCount = await getCountFromServer(
-    collection(db, "notes")
-  );
+  const [
+    notesCount,
+    studentsCount,
+    teachersCount,
+    announcementsCount,
+  ] = await Promise.all([
+    getCountFromServer(collection(db, "notes")),
+    getCountFromServer(collection(db, "students")),
+    getCountFromServer(collection(db, "teachers")),
+    getCountFromServer(collection(db, "announcements")),
+  ]);
 
-  let recentNotes = [];
-
-  const q = query(
+  const notesQuery = query(
     collection(db, "notes"),
     orderBy("uploadedAt", "desc"),
     limit(5)
   );
 
-  const snapshot = await getDocs(q);
+  const snapshot = await getDocs(notesQuery);
 
-  recentNotes = snapshot.docs.map((doc) => ({
+  const recentNotes = snapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
   }));
 
   return {
     notes: notesCount.data().count,
-    students: 0,
-    teachers: 0,
-    announcements: 0,
+    students: studentsCount.data().count,
+    teachers: teachersCount.data().count,
+    announcements: announcementsCount.data().count,
     recentNotes,
   };
 }

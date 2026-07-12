@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
+import DashboardChart from "../../components/dashboard/DashboardChart";
+import SystemStatus from "../../components/dashboard/SystemStatus";
 import { getDashboardStats } from "../../services/dashboardService";
 
 export default function AdminDashboard() {
@@ -204,7 +206,11 @@ export default function AdminDashboard() {
         </div>
 
       </div>
+<div className="mt-12 grid gap-8 xl:grid-cols-2">
+  <DashboardChart />
 
+  <SystemStatus />
+</div>
       {/* Recent Notes */}
 
       <div className="mt-12 rounded-3xl bg-white p-8 shadow-lg">

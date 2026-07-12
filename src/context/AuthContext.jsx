@@ -5,7 +5,10 @@ import {
   useState,
 } from "react";
 
-import { onAuthStateChanged } from "firebase/auth";
+import {
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
 
 import auth from "../firebase/auth";
 import { getUser } from "../services/userService";
@@ -21,28 +24,34 @@ export function AuthProvider({ children }) {
     const unsubscribe = onAuthStateChanged(
       auth,
       async (currentUser) => {
-        console.log("Firebase User:", currentUser);
+        try {
+          setUser(currentUser);
 
-        setUser(currentUser);
-
-        if (currentUser) {
-          console.log("Firebase UID:", currentUser.uid);
-
-          const userProfile = await getUser(currentUser.uid);
-
-          console.log("Firestore Profile:", userProfile);
-
-          setProfile(userProfile);
-        } else {
+          if (currentUser) {
+            const userProfile = await getUser(currentUser.uid);
+            setProfile(userProfile);
+          } else {
+            setProfile(null);
+          }
+        } catch (error) {
+          console.error("Auth Error:", error);
           setProfile(null);
+        } finally {
+          setLoading(false);
         }
-
-        setLoading(false);
       }
     );
 
     return unsubscribe;
   }, []);
+
+  async function logout() {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error("Logout Error:", error);
+    }
+  }
 
   return (
     <AuthContext.Provider
@@ -50,6 +59,7 @@ export function AuthProvider({ children }) {
         user,
         profile,
         loading,
+        logout,
       }}
     >
       {!loading && children}

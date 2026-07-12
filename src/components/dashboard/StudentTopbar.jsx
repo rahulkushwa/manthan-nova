@@ -1,13 +1,12 @@
 import {
   Bell,
   Menu,
-  Search,
   LogOut,
 } from "lucide-react";
 
 import { useAuth } from "../../context/AuthContext";
 
-export default function Topbar({
+export default function StudentTopbar({
   onMenuClick,
 }) {
   const {
@@ -35,7 +34,7 @@ export default function Topbar({
   }
 
   return (
-    <header className="fixed top-0 right-0 left-0 lg:left-80 z-30 border-b border-slate-200 bg-white/90 backdrop-blur-xl">
+    <header className="fixed left-0 right-0 top-0 z-30 border-b border-white/20 bg-white/80 backdrop-blur-2xl lg:left-80">
 
       <div className="flex h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
 
@@ -52,19 +51,15 @@ export default function Topbar({
             <Menu size={24} />
           </button>
 
-          {/* Search */}
+          <div>
 
-          <div className="relative hidden md:block">
+            <h2 className="text-xl font-bold">
+              Student Portal
+            </h2>
 
-            <Search
-              size={18}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-            />
-
-            <input
-              placeholder="Search..."
-              className="w-72 rounded-2xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 outline-none transition focus:border-blue-500 focus:bg-white"
-            />
+            <p className="text-sm text-slate-500">
+              {today}
+            </p>
 
           </div>
 
@@ -73,16 +68,6 @@ export default function Topbar({
         {/* Right */}
 
         <div className="flex items-center gap-4">
-
-          {/* Date */}
-
-          <div className="hidden text-right lg:block">
-
-            <p className="text-sm text-slate-500">
-              {today}
-            </p>
-
-          </div>
 
           {/* Notification */}
 
@@ -102,8 +87,8 @@ export default function Topbar({
               {profile?.name || user?.email}
             </h3>
 
-            <p className="text-sm text-slate-500 capitalize">
-              {profile?.role || "Admin"}
+            <p className="text-sm text-slate-500">
+              Class {profile?.class || "-"}
             </p>
 
           </div>
@@ -112,7 +97,7 @@ export default function Topbar({
 
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 text-lg font-bold text-white">
 
-            {(profile?.name || user?.email || "A")
+            {(profile?.name || user?.email || "S")
               .charAt(0)
               .toUpperCase()}
 

@@ -22,24 +22,36 @@ export async function getDashboardStats() {
     getCountFromServer(collection(db, "announcements")),
   ]);
 
-  const notesQuery = query(
-    collection(db, "notes"),
-    orderBy("uploadedAt", "desc"),
-    limit(5)
+  const notesSnapshot = await getDocs(
+    query(
+      collection(db, "notes"),
+      orderBy("uploadedAt", "desc"),
+      limit(5)
+    )
   );
 
-  const snapshot = await getDocs(notesQuery);
-
-  const recentNotes = snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
+  const studentSnapshot = await getDocs(
+    query(
+      collection(db, "students"),
+      orderBy("createdAt", "desc"),
+      limit(5)
+    )
+  );
 
   return {
     notes: notesCount.data().count,
     students: studentsCount.data().count,
     teachers: teachersCount.data().count,
     announcements: announcementsCount.data().count,
-    recentNotes,
+
+    recentNotes: notesSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    })),
+
+    recentStudents: studentSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    })),
   };
 }

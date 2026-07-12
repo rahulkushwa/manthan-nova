@@ -5,9 +5,13 @@ import {
   Bell,
   CalendarDays,
   LogOut,
+  GraduationCap,
+  X,
+  User,
 } from "lucide-react";
 
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const links = [
   {
@@ -16,7 +20,7 @@ const links = [
     icon: LayoutDashboard,
   },
   {
-    title: "Notes",
+    title: "My Notes",
     path: "/dashboard/notes",
     icon: BookOpen,
   },
@@ -31,71 +35,166 @@ const links = [
     icon: Bell,
   },
   {
-    title: "Schedule",
-    path: "/dashboard/schedule",
+    title: "Attendance",
+    path: "/dashboard/attendance",
     icon: CalendarDays,
   },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({
+  isOpen,
+  onClose,
+}) {
+  const {
+    user,
+    profile,
+    logout,
+  } = useAuth();
+
+  async function handleLogout() {
+    try {
+      await logout();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
-    <aside className="sticky top-0 hidden h-screen w-72 flex-col bg-slate-950 lg:flex">
+    <>
+      {/* Mobile Overlay */}
 
-      {/* Logo */}
+      <div
+        onClick={onClose}
+        className={`fixed inset-0 z-40 bg-black/50 transition-opacity lg:hidden ${
+          isOpen
+            ? "opacity-100"
+            : "pointer-events-none opacity-0"
+        }`}
+      />
 
-      <div className="border-b border-white/10 p-8">
+      {/* Sidebar */}
 
-        <h1 className="text-3xl font-black text-white">
-          Manthan Nova
-        </h1>
+      <aside
+        className={`fixed left-0 top-0 z-50 flex h-screen w-80 flex-col border-r border-white/10 bg-slate-950/90 backdrop-blur-2xl shadow-2xl transition-transform duration-300
+        ${
+          isOpen
+            ? "translate-x-0"
+            : "-translate-x-full"
+        }
+        lg:translate-x-0`}
+      >
 
-        <p className="mt-2 text-slate-400">
-          Student Portal
-        </p>
+        {/* Header */}
 
-      </div>
+        <div className="border-b border-white/10 p-8">
 
-      {/* Navigation */}
+          <div className="flex items-center justify-between">
 
-      <nav className="flex-1 overflow-y-auto space-y-3 p-6">
+            <div className="flex items-center gap-3">
 
-        {links.map((item) => {
+              <div className="rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-700 p-3">
 
+                <GraduationCap
+                  className="text-white"
+                  size={24}
+                />
+
+              </div>
+
+              <div>
+
+                <h1 className="text-2xl font-black text-white">
+                  Manthan Nova
+                </h1>
+
+                <p className="text-sm text-slate-400">
+                  Student Portal
+                </p>
+
+              </div>
+
+            </div>
+
+            <button
+              onClick={onClose}
+              className="rounded-xl p-2 text-white hover:bg-slate-800 lg:hidden"
+            >
+              <X size={22} />
+            </button>
+
+          </div>
+
+        </div>
+
+        {/* Navigation */}
+
+        <nav className="hide-scrollbar flex-1 space-y-2 overflow-y-auto p-5">
+                  {links.map((item) => {
           const Icon = item.icon;
 
           return (
-
             <NavLink
               key={item.title}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center gap-4 rounded-2xl px-5 py-4 font-medium transition ${
+                `group flex items-center gap-4 rounded-2xl px-5 py-4 font-medium transition-all duration-300 ${
                   isActive
-                    ? "bg-blue-600 text-white shadow-lg"
+                    ? "bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg"
                     : "text-slate-400 hover:bg-slate-800 hover:text-white"
                 }`
               }
             >
+              <Icon
+                size={22}
+                className="transition group-hover:scale-110"
+              />
 
-              <Icon size={22} />
-
-              {item.title}
-
+              <span>{item.title}</span>
             </NavLink>
-
           );
-
         })}
-
       </nav>
 
-      {/* Logout */}
+      {/* Student */}
 
-      <div className="border-t border-white/10 p-6">
+      <div className="border-t border-white/10 p-5">
 
-        <button className="flex w-full items-center gap-4 rounded-2xl px-5 py-4 text-slate-400 transition hover:bg-red-500 hover:text-white">
+        <div className="rounded-3xl bg-slate-900/80 p-4 backdrop-blur-xl">
 
-          <LogOut size={22} />
+          <div className="flex items-center gap-4">
+
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
+
+              <User size={24} />
+
+            </div>
+
+            <div className="min-w-0">
+
+              <h3 className="truncate font-semibold text-white">
+                {profile?.name || "Student"}
+              </h3>
+
+              <p className="truncate text-sm text-slate-400">
+                {user?.email}
+              </p>
+
+              <p className="mt-1 text-xs text-blue-300">
+                Class {profile?.class || "-"} • {profile?.board || "-"}
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <button
+          onClick={handleLogout}
+          className="mt-5 flex w-full items-center justify-center gap-3 rounded-2xl bg-red-600 py-4 font-semibold text-white transition-all duration-300 hover:bg-red-700 hover:shadow-lg hover:shadow-red-500/20"
+        >
+
+          <LogOut size={20} />
 
           Logout
 
@@ -104,5 +203,7 @@ export default function Sidebar() {
       </div>
 
     </aside>
+
+    </>
   );
 }

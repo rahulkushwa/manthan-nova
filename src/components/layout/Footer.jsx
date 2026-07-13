@@ -85,7 +85,7 @@ export default function Footer() {
                 <Mail className="mt-1 text-amber-400" />
 
                 <span>
-                  your@email.com
+                  novamanthan@gmail.com 
                 </span>
 
               </div>

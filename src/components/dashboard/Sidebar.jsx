@@ -3,15 +3,16 @@ import {
   BookOpen,
   ClipboardList,
   Bell,
-  CalendarDays,
   LogOut,
   GraduationCap,
   X,
   User,
 } from "lucide-react";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
+
 import { useAuth } from "../../context/AuthContext";
+import { useStudentProfile } from "../../context/StudentProfileContext";
 
 const links = [
   {
@@ -35,9 +36,9 @@ const links = [
     icon: Bell,
   },
   {
-    title: "Attendance",
-    path: "/dashboard/attendance",
-    icon: CalendarDays,
+    title: "My Profile",
+    path: "/dashboard/profile",
+    icon: User,
   },
 ];
 
@@ -47,9 +48,13 @@ export default function Sidebar({
 }) {
   const {
     user,
-    profile,
     logout,
   } = useAuth();
+
+  const {
+    profile,
+    loading,
+  } = useStudentProfile();
 
   async function handleLogout() {
     try {
@@ -83,7 +88,6 @@ export default function Sidebar({
         }
         lg:translate-x-0`}
       >
-
         {/* Header */}
 
         <div className="border-b border-white/10 p-8">
@@ -117,7 +121,7 @@ export default function Sidebar({
 
             <button
               onClick={onClose}
-              className="rounded-xl p-2 text-white hover:bg-slate-800 lg:hidden"
+              className="rounded-xl p-2 text-white transition hover:bg-slate-800 lg:hidden"
             >
               <X size={22} />
             </button>
@@ -129,80 +133,125 @@ export default function Sidebar({
         {/* Navigation */}
 
         <nav className="hide-scrollbar flex-1 space-y-2 overflow-y-auto p-5">
-                  {links.map((item) => {
-          const Icon = item.icon;
 
-          return (
-            <NavLink
-              key={item.title}
-              to={item.path}
-              className={({ isActive }) =>
-                `group flex items-center gap-4 rounded-2xl px-5 py-4 font-medium transition-all duration-300 ${
-                  isActive
-                    ? "bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg"
-                    : "text-slate-400 hover:bg-slate-800 hover:text-white"
-                }`
-              }
-            >
-              <Icon
-                size={22}
-                className="transition group-hover:scale-110"
-              />
+          {links.map((item) => {
 
-              <span>{item.title}</span>
-            </NavLink>
-          );
-        })}
-      </nav>
+            const Icon = item.icon;
 
-      {/* Student */}
+            return (
 
-      <div className="border-t border-white/10 p-5">
+              <NavLink
+                key={item.title}
+                to={item.path}
+                onClick={onClose}
+                className={({ isActive }) =>
+                  `group flex items-center gap-4 rounded-2xl px-5 py-4 font-medium transition-all duration-300 ${
+                    isActive
+                      ? "bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg"
+                      : "text-slate-400 hover:bg-slate-800 hover:text-white"
+                  }`
+                }
+              >
 
-        <div className="rounded-3xl bg-slate-900/80 p-4 backdrop-blur-xl">
+                <Icon
+                  size={22}
+                  className="transition group-hover:scale-110"
+                />
 
-          <div className="flex items-center gap-4">
+                <span>{item.title}</span>
 
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
+              </NavLink>
 
-              <User size={24} />
+            );
+
+          })}
+
+        </nav>
+
+        {/* Student Card */}
+
+        <div className="border-t border-white/10 p-5">
+
+          <Link
+            to="/dashboard/profile"
+            onClick={onClose}
+            className="block rounded-3xl bg-slate-900/80 p-4 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:bg-slate-800 hover:shadow-xl"
+          >
+
+            <div className="flex items-center gap-4">
+
+              <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 text-lg font-bold text-white">
+
+                {loading ? (
+
+                  "..."
+
+                ) : profile?.photoURL ? (
+
+                  <img
+                    src={profile.photoURL}
+                    alt={profile.name}
+                    className="h-full w-full object-cover"
+                  />
+
+                ) : profile?.name ? (
+
+                  profile.name.charAt(0).toUpperCase()
+
+                ) : (
+
+                  <User size={24} />
+
+                )}
+
+              </div>
+
+              <div className="min-w-0">
+
+                <h3 className="truncate font-semibold text-white">
+
+                  {loading
+                    ? "Loading..."
+                    : profile?.name || "Student"}
+
+                </h3>
+
+                <p className="truncate text-sm text-slate-400">
+
+                  {user?.email}
+
+                </p>
+
+                <p className="mt-1 text-xs text-blue-300">
+
+                  {loading
+                    ? "Loading..."
+                    : profile
+                    ? `Class ${profile.class} • ${profile.board}`
+                    : "No Profile"}
+
+                </p>
+
+              </div>
 
             </div>
 
-            <div className="min-w-0">
+          </Link>
 
-              <h3 className="truncate font-semibold text-white">
-                {profile?.name || "Student"}
-              </h3>
+          <button
+            onClick={handleLogout}
+            className="mt-5 flex w-full items-center justify-center gap-3 rounded-2xl bg-red-600 py-4 font-semibold text-white transition-all duration-300 hover:bg-red-700 hover:shadow-lg hover:shadow-red-500/20"
+          >
 
-              <p className="truncate text-sm text-slate-400">
-                {user?.email}
-              </p>
+            <LogOut size={20} />
 
-              <p className="mt-1 text-xs text-blue-300">
-                Class {profile?.class || "-"} • {profile?.board || "-"}
-              </p>
+            Logout
 
-            </div>
-
-          </div>
+          </button>
 
         </div>
 
-        <button
-          onClick={handleLogout}
-          className="mt-5 flex w-full items-center justify-center gap-3 rounded-2xl bg-red-600 py-4 font-semibold text-white transition-all duration-300 hover:bg-red-700 hover:shadow-lg hover:shadow-red-500/20"
-        >
-
-          <LogOut size={20} />
-
-          Logout
-
-        </button>
-
-      </div>
-
-    </aside>
+      </aside>
 
     </>
   );

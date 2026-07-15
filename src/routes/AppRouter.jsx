@@ -26,6 +26,7 @@ import Login from "../pages/auth/Login";
 // Student
 import Dashboard from "../pages/student/Dashboard";
 import StudentNotes from "../pages/student/Notes";
+import Profile from "../pages/student/Profile";
 
 // Admin
 import AdminDashboard from "../pages/admin/Dashboard";
@@ -68,11 +69,19 @@ const router = createBrowserRouter(
           </ProtectedRoute>
         }
       >
-        <Route index element={<Dashboard />} />
+        <Route
+          index
+          element={<Dashboard />}
+        />
 
         <Route
           path="notes"
           element={<StudentNotes />}
+        />
+
+        <Route
+          path="profile"
+          element={<Profile />}
         />
       </Route>
 
@@ -87,12 +96,14 @@ const router = createBrowserRouter(
         }
       >
         {/* Dashboard */}
+
         <Route
           index
           element={<AdminDashboard />}
         />
 
         {/* Notes */}
+
         <Route
           path="upload-notes"
           element={<UploadNotes />}
@@ -109,6 +120,7 @@ const router = createBrowserRouter(
         />
 
         {/* Students */}
+
         <Route
           path="add-student"
           element={<AddStudent />}

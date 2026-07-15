@@ -9,7 +9,9 @@ import {
 } from "lucide-react";
 
 import { Link } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+
+import { useStudentProfile } from "../../context/StudentProfileContext";
+import { useStudentDashboard } from "../../context/StudentDashboardContext";
 
 import GlassCard from "../../components/ui/GlassCard";
 import GlassPanel from "../../components/ui/GlassPanel";
@@ -59,23 +61,13 @@ const cards = [
   },
 ];
 
-const recentNotes = [
-  {
-    title: "Science Chapter 6",
-    subject: "Science",
-  },
-  {
-    title: "Mathematics Chapter 4",
-    subject: "Mathematics",
-  },
-  {
-    title: "Computer Fundamentals",
-    subject: "Computer",
-  },
-];
-
 export default function Dashboard() {
-  const { profile } = useAuth();
+  const { profile } = useStudentProfile();
+
+  const {
+    dashboard,
+    loading,
+  } = useStudentDashboard();
 
   const greeting = () => {
     const hour = new Date().getHours();
@@ -100,21 +92,15 @@ export default function Dashboard() {
         <div className="relative z-10">
 
           <p className="text-sm uppercase tracking-[0.3em] text-blue-200">
-
             Student Portal
-
           </p>
 
           <h1 className="mt-4 text-5xl font-black">
-
             {greeting()} {profile?.name || "Student"} 👋
-
           </h1>
 
           <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-200">
-
             Stay consistent. Small progress every day leads to big success.
-
           </p>
 
           <div className="mt-10 flex flex-wrap gap-4">
@@ -122,15 +108,11 @@ export default function Dashboard() {
             <div className="rounded-2xl bg-white/10 px-6 py-4 backdrop-blur-xl">
 
               <p className="text-sm text-blue-200">
-
                 Class
-
               </p>
 
               <h3 className="mt-1 text-2xl font-bold">
-
                 {profile?.class || "-"}
-
               </h3>
 
             </div>
@@ -138,15 +120,23 @@ export default function Dashboard() {
             <div className="rounded-2xl bg-white/10 px-6 py-4 backdrop-blur-xl">
 
               <p className="text-sm text-blue-200">
-
                 Board
-
               </p>
 
               <h3 className="mt-1 text-2xl font-bold">
-
                 {profile?.board || "-"}
+              </h3>
 
+            </div>
+
+            <div className="rounded-2xl bg-white/10 px-6 py-4 backdrop-blur-xl">
+
+              <p className="text-sm text-blue-200">
+                My Notes
+              </p>
+
+              <h3 className="mt-1 text-2xl font-bold">
+                {loading ? "..." : dashboard.totalNotes}
               </h3>
 
             </div>
@@ -162,9 +152,7 @@ export default function Dashboard() {
       <div>
 
         <h2 className="mb-6 text-3xl font-bold">
-
           Quick Access
-
         </h2>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -192,15 +180,11 @@ export default function Dashboard() {
                   </div>
 
                   <h3 className="mt-6 text-2xl font-bold">
-
                     {card.title}
-
                   </h3>
 
                   <p className="mt-2 text-slate-500">
-
                     {card.description}
-
                   </p>
 
                   <div className="mt-6 flex items-center gap-2 font-semibold text-blue-600">
@@ -225,7 +209,13 @@ export default function Dashboard() {
         </div>
 
       </div>
-            {/* Dashboard Grid */}
+
+      {/* Keep the rest of your Dashboard exactly the same */}
+
+    
+  
+
+                 {/* Dashboard Grid */}
 
       <div className="grid gap-8 xl:grid-cols-3">
 
@@ -238,11 +228,15 @@ export default function Dashboard() {
             <div>
 
               <h2 className="text-3xl font-bold">
+
                 Recent Notes
+
               </h2>
 
               <p className="mt-2 text-slate-500">
+
                 Recently uploaded study materials
+
               </p>
 
             </div>
@@ -251,43 +245,85 @@ export default function Dashboard() {
               to="/dashboard/notes"
               className="font-semibold text-blue-600 hover:text-blue-700"
             >
+
               View All
+
             </Link>
 
           </div>
 
-          <div className="space-y-5">
+          {loading ? (
 
-            {recentNotes.map((note) => (
+            <div className="space-y-4">
 
-              <GlassCard
-                key={note.title}
-                className="flex items-center justify-between p-5"
-              >
+              {[1, 2, 3].map((item) => (
 
-                <div>
+                <div
+                  key={item}
+                  className="h-24 animate-pulse rounded-3xl bg-slate-200"
+                />
 
-                  <h3 className="font-bold text-slate-800">
-                    {note.title}
-                  </h3>
+              ))}
 
-                  <p className="mt-1 text-slate-500">
-                    {note.subject}
-                  </p>
+            </div>
 
-                </div>
+          ) : dashboard.recentNotes.length > 0 ? (
 
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
+            <div className="space-y-5">
 
-                  <BookOpen size={20} />
+              {dashboard.recentNotes.map((note) => (
 
-                </div>
+                <GlassCard
+                  key={note.id}
+                  className="flex items-center justify-between p-5"
+                >
 
-              </GlassCard>
+                  <div className="min-w-0">
 
-            ))}
+                    <h3 className="truncate font-bold text-slate-800">
 
-          </div>
+                      {note.title}
+
+                    </h3>
+
+                    <p className="mt-1 text-slate-500">
+
+                      {note.subject}
+
+                    </p>
+
+                  </div>
+
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
+
+                    <BookOpen size={20} />
+
+                  </div>
+
+                </GlassCard>
+
+              ))}
+
+            </div>
+
+          ) : (
+
+            <div className="rounded-3xl border border-dashed border-slate-300 py-14 text-center">
+
+              <BookOpen
+                size={46}
+                className="mx-auto text-slate-300"
+              />
+
+              <p className="mt-4 text-slate-500">
+
+                No notes available yet.
+
+              </p>
+
+            </div>
+
+          )}
 
         </GlassPanel>
 
@@ -300,7 +336,9 @@ export default function Dashboard() {
           <GlassPanel>
 
             <h2 className="text-2xl font-bold">
+
               Today's Homework
+
             </h2>
 
             <div className="mt-6 rounded-2xl border border-dashed border-slate-300 py-12 text-center">
@@ -311,7 +349,9 @@ export default function Dashboard() {
               />
 
               <p className="mt-4 text-slate-500">
-                No homework assigned.
+
+                Homework module coming soon.
+
               </p>
 
             </div>
@@ -322,22 +362,87 @@ export default function Dashboard() {
 
           <GlassPanel>
 
-            <h2 className="text-2xl font-bold">
-              Announcements
-            </h2>
+            <div className="mb-6 flex items-center justify-between">
 
-            <div className="mt-6 rounded-2xl border border-dashed border-slate-300 py-12 text-center">
+              <h2 className="text-2xl font-bold">
 
-              <Bell
-                size={45}
-                className="mx-auto text-slate-300"
-              />
+                Announcements
 
-              <p className="mt-4 text-slate-500">
-                No announcements yet.
-              </p>
+              </h2>
+
+              <Link
+                to="/dashboard/announcements"
+                className="text-sm font-semibold text-blue-600"
+              >
+
+                View All
+
+              </Link>
 
             </div>
+
+            {loading ? (
+
+              <div className="space-y-4">
+
+                {[1, 2].map((item) => (
+
+                  <div
+                    key={item}
+                    className="h-20 animate-pulse rounded-2xl bg-slate-200"
+                  />
+
+                ))}
+
+              </div>
+
+            ) : dashboard.announcements.length > 0 ? (
+
+              <div className="space-y-4">
+
+                {dashboard.announcements.map((announcement) => (
+
+                  <GlassCard
+                    key={announcement.id}
+                    className="p-4"
+                  >
+
+                    <h3 className="font-bold text-slate-800">
+
+                      {announcement.title}
+
+                    </h3>
+
+                    <p className="mt-2 line-clamp-2 text-sm text-slate-500">
+
+                      {announcement.description}
+
+                    </p>
+
+                  </GlassCard>
+
+                ))}
+
+              </div>
+
+            ) : (
+
+              <div className="rounded-2xl border border-dashed border-slate-300 py-12 text-center">
+
+                <Bell
+                  size={45}
+                  className="mx-auto text-slate-300"
+                />
+
+                <p className="mt-4 text-slate-500">
+
+                  No announcements yet.
+
+                </p>
+
+              </div>
+
+            )}
 
           </GlassPanel>
 

@@ -9,6 +9,10 @@ import {
 
 import { db } from "../firebase/firestore";
 
+/* ======================================
+   ADMIN DASHBOARD
+====================================== */
+
 export async function getDashboardStats() {
   const [
     notesCount,
@@ -38,20 +42,87 @@ export async function getDashboardStats() {
     )
   );
 
+  const students = studentSnapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
   return {
     notes: notesCount.data().count,
+
     students: studentsCount.data().count,
+
     teachers: teachersCount.data().count,
-    announcements: announcementsCount.data().count,
+
+    announcements:
+      announcementsCount.data().count,
+
+    activeStudents: students.filter(
+      (student) =>
+        student.status === "active"
+    ).length,
+
+    inactiveStudents: students.filter(
+      (student) =>
+        student.status === "inactive"
+    ).length,
 
     recentNotes: notesSnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     })),
 
-    recentStudents: studentSnapshot.docs.map((doc) => ({
+    recentStudents: students,
+  };
+}
+
+/* ======================================
+   STUDENT DASHBOARD
+====================================== */
+
+export async function getStudentDashboardStats(
+  studentClass
+) {
+  const [
+    notesSnapshot,
+    announcementSnapshot,
+  ] = await Promise.all([
+    getDocs(
+      query(
+        collection(db, "notes"),
+        orderBy("uploadedAt", "desc")
+      )
+    ),
+
+    getDocs(
+      query(
+        collection(db, "announcements"),
+        orderBy("createdAt", "desc"),
+        limit(5)
+      )
+    ),
+  ]);
+
+  const notes = notesSnapshot.docs
+    .map((doc) => ({
       id: doc.id,
       ...doc.data(),
-    })),
+    }))
+    .filter(
+      (note) =>
+        String(note.class) ===
+        String(studentClass)
+    );
+
+  return {
+    totalNotes: notes.length,
+
+    recentNotes: notes.slice(0, 5),
+
+    announcements:
+      announcementSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })),
   };
 }

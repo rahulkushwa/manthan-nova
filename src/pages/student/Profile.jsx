@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { useStudentProfile } from "../../context/StudentProfileContext";
+import { useStudentDashboard } from "../../context/StudentDashboardContext";
 
 import ProfilePhoto from "../../components/student/ProfilePhoto";
 import ProfileStats from "../../components/student/ProfileStats";
@@ -17,8 +18,14 @@ export default function Profile() {
     setProfile,
   } = useStudentProfile();
 
-  const [showPasswordModal, setShowPasswordModal] =
-    useState(false);
+  const {
+    dashboard,
+  } = useStudentDashboard();
+
+  const [
+    showPasswordModal,
+    setShowPasswordModal,
+  ] = useState(false);
 
   if (loading) {
     return <ProfileSkeleton />;
@@ -49,7 +56,10 @@ export default function Profile() {
           setProfile={setProfile}
         />
 
-        <ProfileStats profile={profile} />
+        <ProfileStats
+          profile={profile}
+          dashboard={dashboard}
+        />
 
         <div className="grid gap-8 xl:grid-cols-3">
 
@@ -86,7 +96,6 @@ export default function Profile() {
           setShowPasswordModal(false)
         }
       />
-
     </>
   );
 }

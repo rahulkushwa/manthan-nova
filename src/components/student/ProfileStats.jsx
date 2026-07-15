@@ -1,32 +1,35 @@
 import {
   BookOpen,
   ClipboardList,
- CalendarCheck2,
+  CalendarCheck2,
   CalendarDays,
 } from "lucide-react";
 
 export default function ProfileStats({
   profile,
+  dashboard,
 }) {
   const stats = [
     {
       title: "My Notes",
-      value: "24",
+      value: dashboard
+        ? dashboard.totalNotes
+        : "...",
       subtitle: "Available",
       icon: BookOpen,
       color: "from-blue-500 to-indigo-600",
     },
     {
       title: "Homework",
-      value: "05",
-      subtitle: "Pending",
+      value: "—",
+      subtitle: "Coming Soon",
       icon: ClipboardList,
       color: "from-amber-500 to-orange-500",
     },
     {
       title: "Attendance",
-      value: "96%",
-      subtitle: "Overall",
+      value: "—",
+      subtitle: "Coming Soon",
       icon: CalendarCheck2,
       color: "from-emerald-500 to-green-600",
     },

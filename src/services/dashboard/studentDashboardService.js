@@ -4,7 +4,6 @@ import {
   query,
   where,
   orderBy,
-  limit,
 } from "firebase/firestore";
 
 import { db } from "../../firebase/firestore";
@@ -14,6 +13,7 @@ export async function getStudentDashboardStats(
 ) {
   const [
     notesSnapshot,
+    homeworkSnapshot,
     announcementSnapshot,
   ] = await Promise.all([
     getDocs(
@@ -26,29 +26,71 @@ export async function getStudentDashboardStats(
 
     getDocs(
       query(
+        collection(db, "homeworks"),
+        where("class", "==", String(studentClass)),
+        orderBy("createdAt", "desc")
+      )
+    ),
+
+    getDocs(
+      query(
         collection(db, "announcements"),
-        orderBy("createdAt", "desc"),
-        limit(5)
+        orderBy("pinned", "desc"),
+        orderBy("createdAt", "desc")
       )
     ),
   ]);
+
+  /* ================= NOTES ================= */
 
   const notes = notesSnapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
   }));
 
-  const announcements =
-    announcementSnapshot.docs.map((doc) => ({
+  /* ================= HOMEWORK ================= */
+
+  const homework = homeworkSnapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  /* ================= ANNOUNCEMENTS ================= */
+
+  const announcements = announcementSnapshot.docs
+    .map((doc) => ({
       id: doc.id,
       ...doc.data(),
-    }));
+    }))
+    .filter((announcement) => {
+      const target = String(
+        announcement.targetClass || ""
+      ).trim();
+
+      return (
+        target === "All" ||
+        target === "ALL" ||
+        target === "all" ||
+        target ===
+          String(studentClass).trim()
+      );
+    });
 
   return {
+    /* Notes */
+
     totalNotes: notes.length,
 
     recentNotes: notes.slice(0, 5),
 
-    announcements,
+    /* Homework */
+
+    totalHomework: homework.length,
+
+    recentHomework: homework.slice(0, 3),
+
+    /* Announcements */
+
+    announcements: announcements.slice(0, 5),
   };
 }

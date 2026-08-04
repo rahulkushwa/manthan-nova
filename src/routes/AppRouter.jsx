@@ -9,7 +9,8 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import AdminLayout from "../layouts/AdminLayout";
 import ProtectedRoute from "./ProtectedRoute";
 
-// Public Pages
+// ================= PUBLIC PAGES =================
+
 import Home from "../pages/Home";
 import About from "../pages/About";
 import Courses from "../pages/Courses";
@@ -20,23 +21,35 @@ import Admission from "../pages/Admission";
 import Contact from "../pages/Contact";
 import NotFound from "../pages/NotFound";
 
-// Auth
+// ================= AUTH =================
+
 import Login from "../pages/auth/Login";
 
-// Student
+// ================= STUDENT =================
+
 import Dashboard from "../pages/student/Dashboard";
 import StudentNotes from "../pages/student/Notes";
+import StudentHomework from "../pages/student/Homework";
+import StudentAnnouncements from "../pages/student/Announcements";
 import Profile from "../pages/student/Profile";
 
-// Admin
+// ================= ADMIN =================
+
 import AdminDashboard from "../pages/admin/Dashboard";
+
 import UploadNotes from "../pages/admin/UploadNotes";
 import ManageNotes from "../pages/admin/ManageNotes";
 import EditNote from "../pages/admin/EditNote";
 
+import UploadHomework from "../pages/admin/UploadHomework";
+import ManageHomework from "../pages/admin/ManageHomework";
+import EditHomework from "../pages/admin/EditHomework";
+
 import AddStudent from "../pages/admin/AddStudent";
 import ManageStudents from "../pages/admin/ManageStudents";
 import EditStudent from "../pages/admin/EditStudent";
+
+import Announcements from "../pages/admin/Announcements";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -45,21 +58,41 @@ const router = createBrowserRouter(
 
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
+
         <Route path="about" element={<About />} />
+
         <Route path="courses" element={<Courses />} />
-        <Route path="testimonials" element={<Testimonials />} />
+
+        <Route
+          path="testimonials"
+          element={<Testimonials />}
+        />
+
         <Route path="notes" element={<Notes />} />
+
         <Route path="faq" element={<FAQ />} />
-        <Route path="admission" element={<Admission />} />
-        <Route path="contact" element={<Contact />} />
+
+        <Route
+          path="admission"
+          element={<Admission />}
+        />
+
+        <Route
+          path="contact"
+          element={<Contact />}
+        />
+
         <Route path="*" element={<NotFound />} />
       </Route>
 
       {/* ================= LOGIN ================= */}
 
-      <Route path="/login" element={<Login />} />
+      <Route
+        path="/login"
+        element={<Login />}
+      />
 
-      {/* ================= STUDENT DASHBOARD ================= */}
+      {/* ================= STUDENT ================= */}
 
       <Route
         path="/dashboard"
@@ -80,12 +113,22 @@ const router = createBrowserRouter(
         />
 
         <Route
+          path="homework"
+          element={<StudentHomework />}
+        />
+
+        <Route
+          path="announcements"
+          element={<StudentAnnouncements />}
+        />
+
+        <Route
           path="profile"
           element={<Profile />}
         />
       </Route>
 
-      {/* ================= ADMIN DASHBOARD ================= */}
+      {/* ================= ADMIN ================= */}
 
       <Route
         path="/admin"
@@ -95,8 +138,6 @@ const router = createBrowserRouter(
           </ProtectedRoute>
         }
       >
-        {/* Dashboard */}
-
         <Route
           index
           element={<AdminDashboard />}
@@ -119,6 +160,23 @@ const router = createBrowserRouter(
           element={<EditNote />}
         />
 
+        {/* Homework */}
+
+        <Route
+          path="upload-homework"
+          element={<UploadHomework />}
+        />
+
+        <Route
+          path="manage-homework"
+          element={<ManageHomework />}
+        />
+
+        <Route
+          path="edit-homework/:id"
+          element={<EditHomework />}
+        />
+
         {/* Students */}
 
         <Route
@@ -134,6 +192,13 @@ const router = createBrowserRouter(
         <Route
           path="edit-student/:id"
           element={<EditStudent />}
+        />
+
+        {/* Announcements */}
+
+        <Route
+          path="announcements"
+          element={<Announcements />}
         />
       </Route>
     </>

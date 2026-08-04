@@ -19,11 +19,13 @@ export function StudentDashboardProvider({
     profile,
   } = useStudentProfile();
 
-  const [dashboard, setDashboard] = useState({
-    totalNotes: 0,
-    recentNotes: [],
-    announcements: [],
-  });
+const [dashboard, setDashboard] = useState({
+  totalNotes: 0,
+  recentNotes: [],
+  totalHomework: 0,
+  recentHomework: [],
+  announcements: [],
+});
 
   const [loading, setLoading] = useState(true);
 

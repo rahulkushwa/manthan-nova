@@ -97,8 +97,8 @@ export async function getStudentDashboardStats(
     getDocs(
       query(
         collection(db, "announcements"),
-        orderBy("createdAt", "desc"),
-        limit(5)
+        orderBy("pinned", "desc"),
+        orderBy("createdAt", "desc")
       )
     ),
   ]);
@@ -114,15 +114,34 @@ export async function getStudentDashboardStats(
         String(studentClass)
     );
 
+  const announcements =
+    announcementSnapshot.docs
+      .map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }))
+      .filter((announcement) => {
+        const target = String(
+          announcement.targetClass || ""
+        ).trim();
+
+        return (
+          target === "All" ||
+          target === "ALL" ||
+          target === "all" ||
+          target ===
+            String(studentClass).trim()
+        );
+      });
+
   return {
     totalNotes: notes.length,
 
     recentNotes: notes.slice(0, 5),
 
-    announcements:
-      announcementSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })),
+    announcements: announcements.slice(
+      0,
+      5
+    ),
   };
 }

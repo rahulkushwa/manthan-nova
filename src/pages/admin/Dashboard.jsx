@@ -83,28 +83,28 @@ export default function AdminDashboard() {
     },
   ];
 
-  const quickActions = [
-    {
-      title: "Upload Notes",
-      path: "/admin/upload-notes",
-      icon: Upload,
-    },
-    {
-      title: "Manage Notes",
-      path: "/admin/manage-notes",
-      icon: BookOpen,
-    },
-    {
-      title: "Homework",
-      path: "/admin/homework",
-      icon: ClipboardList,
-    },
-    {
-      title: "Analytics",
-      path: "#",
-      icon: BarChart3,
-    },
-  ];
+const quickActions = [
+  {
+    title: "Upload Notes",
+    path: "/admin/upload-notes",
+    icon: Upload,
+  },
+  {
+    title: "Manage Notes",
+    path: "/admin/manage-notes",
+    icon: BookOpen,
+  },
+  {
+    title: "Announcements",
+    path: "/admin/announcements",
+    icon: Bell,
+  },
+  {
+    title: "Analytics",
+    path: "#",
+    icon: BarChart3,
+  },
+];
 
   if (loading) {
     return <DashboardSkeleton />;
@@ -183,11 +183,14 @@ export default function AdminDashboard() {
             <Link
               key={card.title}
               to={card.path}
+              className="group"
             >
 
-              <GlassCard className="p-6">
+              <GlassCard className="relative overflow-hidden p-6 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-2xl">
 
-                <div className="flex items-center justify-between">
+                <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-gradient-to-br from-white/20 to-transparent blur-2xl" />
+
+                <div className="relative flex items-center justify-between">
 
                   <div>
 
@@ -206,8 +209,8 @@ export default function AdminDashboard() {
                   >
 
                     <Icon
-                      className="text-white"
                       size={30}
+                      className="text-white"
                     />
 
                   </div>
@@ -224,13 +227,25 @@ export default function AdminDashboard() {
 
       </div>
 
-      {/* Quick Actions */}
+          {/* Quick Actions */}
 
       <div>
 
-        <h2 className="mb-6 text-3xl font-bold">
-          Quick Actions
-        </h2>
+        <div className="mb-6 flex items-center justify-between">
+
+          <div>
+
+            <h2 className="text-3xl font-bold">
+              Quick Actions
+            </h2>
+
+            <p className="mt-2 text-slate-500">
+              Frequently used shortcuts
+            </p>
+
+          </div>
+
+        </div>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
 
@@ -246,16 +261,18 @@ export default function AdminDashboard() {
                 className="group"
               >
 
-                <GlassCard className="h-full p-6">
+                <GlassCard className="h-full p-6 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-xl">
 
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg transition duration-300 group-hover:scale-110">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg transition-transform duration-300 group-hover:scale-110">
 
                     <Icon size={28} />
 
                   </div>
 
                   <h3 className="mt-6 text-2xl font-bold">
+
                     {item.title}
+
                   </h3>
 
                   <div className="mt-6 flex items-center gap-2 font-semibold text-blue-600">
@@ -264,7 +281,7 @@ export default function AdminDashboard() {
 
                     <ArrowRight
                       size={18}
-                      className="transition group-hover:translate-x-2"
+                      className="transition-transform duration-300 group-hover:translate-x-2"
                     />
 
                   </div>

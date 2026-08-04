@@ -11,6 +11,8 @@ import {
   LogOut,
   X,
   GraduationCap,
+  BookMarked,
+  ClipboardCheck,
 } from "lucide-react";
 
 import { NavLink } from "react-router-dom";
@@ -22,6 +24,9 @@ const links = [
     path: "/admin",
     icon: LayoutDashboard,
   },
+
+  // ================= NOTES =================
+
   {
     title: "Upload Notes",
     path: "/admin/upload-notes",
@@ -32,6 +37,22 @@ const links = [
     path: "/admin/manage-notes",
     icon: FileText,
   },
+
+  // ================= HOMEWORK =================
+
+  {
+    title: "Upload Homework",
+    path: "/admin/upload-homework",
+    icon: BookMarked,
+  },
+  {
+    title: "Manage Homework",
+    path: "/admin/manage-homework",
+    icon: ClipboardCheck,
+  },
+
+  // ================= STUDENTS =================
+
   {
     title: "Add Student",
     path: "/admin/add-student",
@@ -42,20 +63,26 @@ const links = [
     path: "/admin/manage-students",
     icon: Users,
   },
+
+  // ================= ANNOUNCEMENTS =================
+
+  {
+    title: "Announcements",
+    path: "/admin/announcements",
+    icon: Bell,
+  },
+
+  // ================= FUTURE MODULES =================
+
   {
     title: "Teachers",
     path: "/admin/teachers",
     icon: UserCog,
   },
   {
-    title: "Homework",
-    path: "/admin/homework",
+    title: "Attendance",
+    path: "/admin/attendance",
     icon: ClipboardList,
-  },
-  {
-    title: "Announcements",
-    path: "/admin/announcements",
-    icon: Bell,
   },
   {
     title: "Settings",
@@ -94,48 +121,33 @@ export default function AdminSidebar({
       {/* Sidebar */}
 
       <aside
-        className={`fixed left-0 top-0 z-50 flex h-screen w-80 flex-col bg-slate-950 shadow-2xl transition-transform duration-300
-        ${
+        className={`fixed left-0 top-0 z-50 flex h-screen w-80 flex-col bg-slate-950 shadow-2xl transition-transform duration-300 ${
           isOpen
             ? "translate-x-0"
             : "-translate-x-full"
-        }
-        lg:translate-x-0`}
+        } lg:translate-x-0`}
       >
-
         {/* Header */}
 
         <div className="border-b border-white/10 p-8">
-
           <div className="flex items-center justify-between">
-
-            <div>
-
-              <div className="flex items-center gap-3">
-
-                <div className="rounded-2xl bg-blue-600 p-3">
-
-                  <GraduationCap
-                    className="text-white"
-                    size={24}
-                  />
-
-                </div>
-
-                <div>
-
-                  <h1 className="text-2xl font-black text-white">
-                    Manthan Nova
-                  </h1>
-
-                  <p className="text-sm text-slate-400">
-                    Admin Portal
-                  </p>
-
-                </div>
-
+            <div className="flex items-center gap-3">
+              <div className="rounded-2xl bg-blue-600 p-3">
+                <GraduationCap
+                  className="text-white"
+                  size={24}
+                />
               </div>
 
+              <div>
+                <h1 className="text-2xl font-black text-white">
+                  Manthan Nova
+                </h1>
+
+                <p className="text-sm text-slate-400">
+                  Admin Portal
+                </p>
+              </div>
             </div>
 
             <button
@@ -144,21 +156,16 @@ export default function AdminSidebar({
             >
               <X size={22} />
             </button>
-
           </div>
-
         </div>
 
         {/* Navigation */}
 
-      <nav className="hide-scrollbar flex-1 space-y-2 overflow-y-auto p-5">
-
+        <nav className="hide-scrollbar flex-1 space-y-2 overflow-y-auto p-5">
           {links.map((item) => {
-
             const Icon = item.icon;
 
             return (
-
               <NavLink
                 key={item.title}
                 to={item.path}
@@ -170,25 +177,18 @@ export default function AdminSidebar({
                   }`
                 }
               >
-
                 <Icon size={22} />
 
                 {item.title}
-
               </NavLink>
-
             );
-
           })}
-
         </nav>
 
         {/* Footer */}
 
         <div className="border-t border-white/10 p-5">
-
           <div className="mb-5 rounded-2xl bg-slate-900 p-4">
-
             <p className="text-sm text-slate-400">
               Logged in as
             </p>
@@ -196,22 +196,17 @@ export default function AdminSidebar({
             <h3 className="mt-2 truncate font-semibold text-white">
               {user?.email}
             </h3>
-
           </div>
 
           <button
             onClick={handleLogout}
             className="flex w-full items-center justify-center gap-3 rounded-2xl bg-red-600 px-5 py-4 font-semibold text-white transition hover:bg-red-700"
           >
-
             <LogOut size={20} />
 
             Logout
-
           </button>
-
         </div>
-
       </aside>
     </>
   );

@@ -131,15 +131,27 @@ export default function Dashboard() {
 
             <div className="rounded-2xl bg-white/10 px-6 py-4 backdrop-blur-xl">
 
-              <p className="text-sm text-blue-200">
-                My Notes
-              </p>
+  <p className="text-sm text-blue-200">
+    My Notes
+  </p>
 
-              <h3 className="mt-1 text-2xl font-bold">
-                {loading ? "..." : dashboard.totalNotes}
-              </h3>
+  <h3 className="mt-1 text-2xl font-bold">
+    {loading ? "..." : dashboard.totalNotes}
+  </h3>
 
-            </div>
+</div>
+
+<div className="rounded-2xl bg-white/10 px-6 py-4 backdrop-blur-xl">
+
+  <p className="text-sm text-blue-200">
+    Homework
+  </p>
+
+  <h3 className="mt-1 text-2xl font-bold">
+    {loading ? "..." : dashboard.totalHomework}
+  </h3>
+
+</div>
 
           </div>
 
@@ -331,32 +343,134 @@ export default function Dashboard() {
 
         <div className="space-y-8">
 
-          {/* Homework */}
+       {/* Homework */}
 
-          <GlassPanel>
+<GlassPanel>
 
-            <h2 className="text-2xl font-bold">
+  <div className="mb-6 flex items-center justify-between">
 
-              Today's Homework
+    <h2 className="text-2xl font-bold">
 
-            </h2>
+      Recent Homework
 
-            <div className="mt-6 rounded-2xl border border-dashed border-slate-300 py-12 text-center">
+    </h2>
 
-              <ClipboardList
-                size={45}
-                className="mx-auto text-slate-300"
-              />
+    <Link
+      to="/dashboard/homework"
+      className="text-sm font-semibold text-blue-600 hover:text-blue-700"
+    >
 
-              <p className="mt-4 text-slate-500">
+      View All
 
-                Homework module coming soon.
+    </Link>
+
+  </div>
+
+  {loading ? (
+
+    <div className="space-y-4">
+
+      {[1, 2].map((item) => (
+
+        <div
+          key={item}
+          className="h-24 animate-pulse rounded-2xl bg-slate-200"
+        />
+
+      ))}
+
+    </div>
+
+  ) : dashboard.recentHomework?.length > 0 ? (
+
+    <div className="space-y-4">
+
+      {dashboard.recentHomework.map((homework) => (
+
+        <GlassCard
+          key={homework.id}
+          className="p-5"
+        >
+
+          <div className="flex items-start justify-between gap-4">
+
+            <div className="min-w-0">
+
+              <h3 className="truncate font-bold text-slate-800">
+
+                {homework.title}
+
+              </h3>
+
+              <p className="mt-1 text-sm text-slate-500">
+
+                {homework.subject}
+
+              </p>
+
+              <p className="mt-3 line-clamp-2 text-sm text-slate-600">
+
+                {homework.description}
 
               </p>
 
             </div>
 
-          </GlassPanel>
+            <div className="rounded-xl bg-amber-100 p-3 text-amber-600">
+
+              <ClipboardList size={22} />
+
+            </div>
+
+          </div>
+
+          <div className="mt-5 flex items-center justify-between">
+
+            <div className="flex items-center gap-2 text-sm font-medium text-red-600">
+
+              <CalendarDays size={16} />
+
+              Due: {homework.dueDate}
+
+            </div>
+
+            <Link
+              to="/dashboard/homework"
+              className="font-semibold text-blue-600 hover:text-blue-700"
+            >
+
+              Open
+
+            </Link>
+
+          </div>
+
+        </GlassCard>
+
+      ))}
+
+    </div>
+
+  ) : (
+
+    <div className="rounded-2xl border border-dashed border-slate-300 py-12 text-center">
+
+      <ClipboardList
+        size={45}
+        className="mx-auto text-slate-300"
+      />
+
+      <p className="mt-4 text-slate-500">
+
+        No homework assigned yet.
+
+      </p>
+
+    </div>
+
+  )}
+
+</GlassPanel>
 
           {/* Announcements */}
 
@@ -415,7 +529,7 @@ export default function Dashboard() {
 
                     <p className="mt-2 line-clamp-2 text-sm text-slate-500">
 
-                      {announcement.description}
+                      {announcement.message}
 
                     </p>
 

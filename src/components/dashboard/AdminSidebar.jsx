@@ -13,12 +13,17 @@ import {
   GraduationCap,
   BookMarked,
   ClipboardCheck,
+  CreditCard,
+  Wallet,
+  History,
 } from "lucide-react";
 
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 const links = [
+  // ================= DASHBOARD =================
+
   {
     title: "Dashboard",
     path: "/admin",
@@ -62,6 +67,29 @@ const links = [
     title: "Manage Students",
     path: "/admin/manage-students",
     icon: Users,
+  },
+
+  // ================= FEES =================
+
+  {
+    title: "Fees Dashboard",
+    path: "/admin/fees",
+    icon: CreditCard,
+  },
+  {
+    title: "Add Fee",
+    path: "/admin/fees/add",
+    icon: UserPlus,
+  },
+  {
+    title: "Manage Fees",
+    path: "/admin/fees/manage",
+    icon: Wallet,
+  },
+  {
+    title: "Fee History",
+    path: "/admin/fees/history",
+    icon: History,
   },
 
   // ================= ANNOUNCEMENTS =================
@@ -130,16 +158,22 @@ export default function AdminSidebar({
         {/* Header */}
 
         <div className="border-b border-white/10 p-8">
+
           <div className="flex items-center justify-between">
+
             <div className="flex items-center gap-3">
+
               <div className="rounded-2xl bg-blue-600 p-3">
+
                 <GraduationCap
                   className="text-white"
                   size={24}
                 />
+
               </div>
 
               <div>
+
                 <h1 className="text-2xl font-black text-white">
                   Manthan Nova
                 </h1>
@@ -147,21 +181,28 @@ export default function AdminSidebar({
                 <p className="text-sm text-slate-400">
                   Admin Portal
                 </p>
+
               </div>
+
             </div>
 
             <button
               onClick={onClose}
               className="rounded-xl p-2 text-white hover:bg-slate-800 lg:hidden"
             >
+
               <X size={22} />
+
             </button>
+
           </div>
+
         </div>
 
         {/* Navigation */}
 
         <nav className="hide-scrollbar flex-1 space-y-2 overflow-y-auto p-5">
+
           {links.map((item) => {
             const Icon = item.icon;
 
@@ -177,18 +218,23 @@ export default function AdminSidebar({
                   }`
                 }
               >
+
                 <Icon size={22} />
 
                 {item.title}
+
               </NavLink>
             );
           })}
+
         </nav>
 
         {/* Footer */}
 
         <div className="border-t border-white/10 p-5">
+
           <div className="mb-5 rounded-2xl bg-slate-900 p-4">
+
             <p className="text-sm text-slate-400">
               Logged in as
             </p>
@@ -196,18 +242,24 @@ export default function AdminSidebar({
             <h3 className="mt-2 truncate font-semibold text-white">
               {user?.email}
             </h3>
+
           </div>
 
           <button
             onClick={handleLogout}
             className="flex w-full items-center justify-center gap-3 rounded-2xl bg-red-600 px-5 py-4 font-semibold text-white transition hover:bg-red-700"
           >
+
             <LogOut size={20} />
 
             Logout
+
           </button>
+
         </div>
+
       </aside>
+
     </>
   );
 }

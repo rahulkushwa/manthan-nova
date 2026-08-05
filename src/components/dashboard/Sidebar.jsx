@@ -7,6 +7,8 @@ import {
   GraduationCap,
   X,
   User,
+  CreditCard,
+  History,
 } from "lucide-react";
 
 import { NavLink, Link } from "react-router-dom";
@@ -35,6 +37,22 @@ const links = [
     path: "/dashboard/announcements",
     icon: Bell,
   },
+
+  // ================= FEES =================
+
+  {
+    title: "My Fees",
+    path: "/dashboard/fees",
+    icon: CreditCard,
+  },
+  {
+    title: "Payment History",
+    path: "/dashboard/payment-history",
+    icon: History,
+  },
+
+  // ================= PROFILE =================
+
   {
     title: "My Profile",
     path: "/dashboard/profile",
@@ -80,13 +98,11 @@ export default function Sidebar({
       {/* Sidebar */}
 
       <aside
-        className={`fixed left-0 top-0 z-50 flex h-screen w-80 flex-col border-r border-white/10 bg-slate-950/90 backdrop-blur-2xl shadow-2xl transition-transform duration-300
-        ${
+        className={`fixed left-0 top-0 z-50 flex h-screen w-80 flex-col border-r border-white/10 bg-slate-950/90 backdrop-blur-2xl shadow-2xl transition-transform duration-300 ${
           isOpen
             ? "translate-x-0"
             : "-translate-x-full"
-        }
-        lg:translate-x-0`}
+        } lg:translate-x-0`}
       >
         {/* Header */}
 
@@ -123,7 +139,9 @@ export default function Sidebar({
               onClick={onClose}
               className="rounded-xl p-2 text-white transition hover:bg-slate-800 lg:hidden"
             >
+
               <X size={22} />
+
             </button>
 
           </div>

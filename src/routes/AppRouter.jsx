@@ -33,6 +33,9 @@ import StudentHomework from "../pages/student/Homework";
 import StudentAnnouncements from "../pages/student/Announcements";
 import Profile from "../pages/student/Profile";
 
+import StudentFees from "../pages/student/Fees/Fees";
+import PaymentHistory from "../pages/student/Fees/PaymentHistory";
+
 // ================= ADMIN =================
 
 import AdminDashboard from "../pages/admin/Dashboard";
@@ -50,6 +53,14 @@ import ManageStudents from "../pages/admin/ManageStudents";
 import EditStudent from "../pages/admin/EditStudent";
 
 import Announcements from "../pages/admin/Announcements";
+
+// ================= FEES =================
+
+import FeesDashboard from "../pages/admin/Fees/Dashboard";
+import AddFee from "../pages/admin/Fees/AddFee";
+import ManageFees from "../pages/admin/Fees/ManageFees";
+import EditFee from "../pages/admin/Fees/EditFee";
+import FeeHistory from "../pages/admin/Fees/FeeHistory";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -126,6 +137,18 @@ const router = createBrowserRouter(
           path="profile"
           element={<Profile />}
         />
+
+        {/* ================= FEES ================= */}
+
+        <Route
+          path="fees"
+          element={<StudentFees />}
+        />
+
+        <Route
+          path="payment-history"
+          element={<PaymentHistory />}
+        />
       </Route>
 
       {/* ================= ADMIN ================= */}
@@ -143,7 +166,7 @@ const router = createBrowserRouter(
           element={<AdminDashboard />}
         />
 
-        {/* Notes */}
+        {/* ================= NOTES ================= */}
 
         <Route
           path="upload-notes"
@@ -160,7 +183,7 @@ const router = createBrowserRouter(
           element={<EditNote />}
         />
 
-        {/* Homework */}
+        {/* ================= HOMEWORK ================= */}
 
         <Route
           path="upload-homework"
@@ -177,7 +200,7 @@ const router = createBrowserRouter(
           element={<EditHomework />}
         />
 
-        {/* Students */}
+        {/* ================= STUDENTS ================= */}
 
         <Route
           path="add-student"
@@ -194,11 +217,38 @@ const router = createBrowserRouter(
           element={<EditStudent />}
         />
 
-        {/* Announcements */}
+        {/* ================= ANNOUNCEMENTS ================= */}
 
         <Route
           path="announcements"
           element={<Announcements />}
+        />
+
+        {/* ================= FEES ================= */}
+
+        <Route
+          path="fees"
+          element={<FeesDashboard />}
+        />
+
+        <Route
+          path="fees/add"
+          element={<AddFee />}
+        />
+
+        <Route
+          path="fees/manage"
+          element={<ManageFees />}
+        />
+
+        <Route
+          path="fees/edit/:id"
+          element={<EditFee />}
+        />
+
+        <Route
+          path="fees/history"
+          element={<FeeHistory />}
         />
       </Route>
     </>

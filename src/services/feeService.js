@@ -209,13 +209,31 @@ export async function recordPayment(
     );
   }
 
-  const paidAmount =
-    Number(fee.paidAmount) +
-    Number(payment.amount);
+  const totalAmount = Number(
+    fee.totalAmount
+  );
 
-  const dueAmount =
-    Number(fee.totalAmount) -
-    paidAmount;
+  const currentPaid = Number(
+    fee.paidAmount
+  );
+
+  const paymentAmount = Number(
+    payment.amount
+  );
+
+  const paidAmount =
+    currentPaid + paymentAmount;
+
+  if (paidAmount > totalAmount) {
+    throw new Error(
+      "Payment exceeds total fee."
+    );
+  }
+
+  const dueAmount = Math.max(
+    totalAmount - paidAmount,
+    0
+  );
 
   await updateDoc(
     doc(db, "fees", id),
@@ -225,7 +243,7 @@ export async function recordPayment(
       dueAmount,
 
       status: getStatus(
-        Number(fee.totalAmount),
+        totalAmount,
         paidAmount
       ),
 
@@ -236,8 +254,9 @@ export async function recordPayment(
         serverTimestamp(),
 
       remarks:
-        payment.remarks ||
-        fee.remarks,
+        payment.remarks?.trim()
+          ? payment.remarks
+          : fee.remarks,
 
       updatedAt:
         serverTimestamp(),

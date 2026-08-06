@@ -61,6 +61,8 @@ import AddFee from "../pages/admin/Fees/AddFee";
 import ManageFees from "../pages/admin/Fees/ManageFees";
 import EditFee from "../pages/admin/Fees/EditFee";
 import FeeHistory from "../pages/admin/Fees/FeeHistory";
+import RecordPayment from "../pages/admin/Fees/RecordPayment";
+import FeeReceipt from "../pages/admin/Fees/FeeReceipt";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -68,6 +70,7 @@ const router = createBrowserRouter(
       {/* ================= PUBLIC WEBSITE ================= */}
 
       <Route path="/" element={<MainLayout />}>
+
         <Route index element={<Home />} />
 
         <Route path="about" element={<About />} />
@@ -93,7 +96,11 @@ const router = createBrowserRouter(
           element={<Contact />}
         />
 
-        <Route path="*" element={<NotFound />} />
+        <Route
+          path="*"
+          element={<NotFound />}
+        />
+
       </Route>
 
       {/* ================= LOGIN ================= */}
@@ -113,6 +120,7 @@ const router = createBrowserRouter(
           </ProtectedRoute>
         }
       >
+
         <Route
           index
           element={<Dashboard />}
@@ -138,8 +146,6 @@ const router = createBrowserRouter(
           element={<Profile />}
         />
 
-        {/* ================= FEES ================= */}
-
         <Route
           path="fees"
           element={<StudentFees />}
@@ -149,6 +155,7 @@ const router = createBrowserRouter(
           path="payment-history"
           element={<PaymentHistory />}
         />
+
       </Route>
 
       {/* ================= ADMIN ================= */}
@@ -161,6 +168,7 @@ const router = createBrowserRouter(
           </ProtectedRoute>
         }
       >
+
         <Route
           index
           element={<AdminDashboard />}
@@ -223,8 +231,7 @@ const router = createBrowserRouter(
           path="announcements"
           element={<Announcements />}
         />
-
-        {/* ================= FEES ================= */}
+                {/* ================= FEES ================= */}
 
         <Route
           path="fees"
@@ -247,10 +254,22 @@ const router = createBrowserRouter(
         />
 
         <Route
+          path="fees/payment/:id"
+          element={<RecordPayment />}
+        />
+
+        <Route
+          path="fees/receipt/:id"
+          element={<FeeReceipt />}
+        />
+
+        <Route
           path="fees/history"
           element={<FeeHistory />}
         />
+
       </Route>
+
     </>
   )
 );

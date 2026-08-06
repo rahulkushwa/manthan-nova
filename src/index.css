@@ -60,6 +60,7 @@ a {
 ::-webkit-scrollbar-thumb:hover {
   background: #0b2f73;
 }
+
 /* Hide Scrollbar */
 
 .hide-scrollbar::-webkit-scrollbar {
@@ -69,4 +70,38 @@ a {
 .hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+/* ================= PRINT ================= */
+
+@media print {
+
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+
+  body {
+    background: white !important;
+  }
+
+  .no-print {
+}
+
+@media print {
+
+  .no-print {
+    display: none !important;
+  }
+
+}
+
+  .receipt-print {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto !important;
+    background: white !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
 }

@@ -19,28 +19,27 @@ export default function AddFee() {
     useState(null);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-5 sm:space-y-6 lg:space-y-8">
 
       {/* Header */}
 
       <GlassPanel>
 
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
 
           <div>
 
-            <h1 className="text-4xl font-black">
+            <h1 className="text-3xl font-black sm:text-4xl">
               Add Student Fee
             </h1>
 
-            <p className="mt-3 text-slate-500">
-              Select a student and create a
-              monthly fee record.
+            <p className="mt-2 text-sm text-slate-500 sm:text-base">
+              Select a student and create a monthly fee record.
             </p>
 
           </div>
 
-          <div className="rounded-2xl bg-blue-100 px-6 py-3 font-semibold text-blue-700">
+          <div className="flex w-full items-center justify-center rounded-2xl bg-blue-100 px-5 py-3 font-semibold text-blue-700 sm:w-auto">
 
             Fee Management
 
@@ -57,32 +56,27 @@ export default function AddFee() {
         onSelect={setSelectedStudent}
       />
 
-      {/* Selected Student */}
+      {/* Student Details */}
 
       {selectedStudent && (
 
         <GlassPanel>
 
-          <div className="mb-8 flex items-center justify-between">
+          <div className="mb-6 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
 
             <div>
 
-              <h2 className="text-3xl font-bold">
-
+              <h2 className="text-2xl font-bold sm:text-3xl">
                 Selected Student
-
               </h2>
 
-              <p className="mt-2 text-slate-500">
-
-                Verify the student details before
-                creating the fee record.
-
+              <p className="mt-2 text-sm text-slate-500 sm:text-base">
+                Verify the student details before creating the fee record.
               </p>
 
             </div>
 
-            <div className="rounded-2xl bg-green-100 px-6 py-3 font-semibold text-green-700">
+            <div className="flex w-full items-center justify-center rounded-2xl bg-green-100 px-5 py-3 font-semibold text-green-700 sm:w-auto">
 
               ✓ Selected
 
@@ -102,10 +96,10 @@ export default function AddFee() {
                   "https://placehold.co/200x200?text=Student"
                 }
                 alt={selectedStudent.name}
-                className="h-44 w-44 rounded-3xl border-4 border-white object-cover shadow-xl"
+                className="h-36 w-36 rounded-3xl border-4 border-white object-cover shadow-xl sm:h-44 sm:w-44"
               />
 
-              <h3 className="mt-5 text-2xl font-bold">
+              <h3 className="mt-4 text-center text-xl font-bold sm:text-2xl">
 
                 {selectedStudent.name}
 
@@ -115,7 +109,7 @@ export default function AddFee() {
 
             {/* Details */}
 
-            <div className="grid gap-5 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 
               <InfoCard
                 icon={<GraduationCap size={20} />}
@@ -144,27 +138,21 @@ export default function AddFee() {
               <InfoCard
                 icon={<Calendar size={20} />}
                 label="Admission Date"
-                value={
-                  selectedStudent.admissionDate
-                }
+                value={selectedStudent.admissionDate}
               />
 
               <InfoCard
                 icon={<BadgeCheck size={20} />}
                 label="Status"
-                value={
-                  selectedStudent.status
-                }
+                value={selectedStudent.status}
               />
 
-              <div className="md:col-span-2">
+              <div className="sm:col-span-2">
 
                 <InfoCard
                   icon={<User size={20} />}
                   label="School"
-                  value={
-                    selectedStudent.school
-                  }
+                  value={selectedStudent.school}
                 />
 
               </div>
@@ -180,11 +168,9 @@ export default function AddFee() {
       {/* Fee Form */}
 
       {selectedStudent && (
-
         <FeeForm
           student={selectedStudent}
         />
-
       )}
 
     </div>
@@ -197,21 +183,21 @@ function InfoCard({
   value,
 }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+    <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:shadow-md sm:p-5">
 
-      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-blue-700">
+      <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-blue-100 text-blue-700">
 
         {icon}
 
       </div>
 
-      <p className="text-sm text-slate-500">
+      <p className="text-xs uppercase tracking-wide text-slate-500">
 
         {label}
 
       </p>
 
-      <h3 className="mt-2 text-lg font-bold break-words">
+      <h3 className="mt-2 break-words text-base font-bold sm:text-lg">
 
         {value || "-"}
 

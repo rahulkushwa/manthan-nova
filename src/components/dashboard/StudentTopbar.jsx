@@ -13,6 +13,7 @@ import { useStudentProfile } from "../../context/StudentProfileContext";
 export default function StudentTopbar({
   onMenuClick,
 }) {
+
   const {
     logout,
   } = useAuth();
@@ -33,40 +34,53 @@ export default function StudentTopbar({
   );
 
   async function handleLogout() {
+
     try {
+
       await logout();
+
     } catch (error) {
+
       console.error(error);
+
     }
+
   }
 
   return (
-    <header className="fixed left-0 right-0 top-0 z-30 border-b border-white/20 bg-white/80 backdrop-blur-2xl lg:left-80">
 
-      <div className="flex h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
+    <header className="fixed inset-x-0 top-0 z-30 border-b border-white/20 bg-white/85 backdrop-blur-2xl lg:left-80">
+
+      <div className="flex h-20 items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
 
         {/* Left */}
 
-        <div className="flex items-center gap-4">
+        <div className="flex min-w-0 items-center gap-3">
 
           <button
             onClick={onMenuClick}
             className="rounded-xl p-2 transition hover:bg-slate-100 lg:hidden"
           >
+
             <Menu size={24} />
+
           </button>
 
           <Link
             to="/dashboard"
-            className="rounded-2xl px-2 py-1 transition-all duration-300 hover:bg-slate-100"
+            className="min-w-0 rounded-2xl px-2 py-1 transition hover:bg-slate-100"
           >
 
-            <h2 className="text-xl font-bold text-slate-900">
+            <h2 className="truncate text-lg font-bold text-slate-900 sm:text-xl">
+
               Student Portal
+
             </h2>
 
-            <p className="text-sm text-slate-500">
+            <p className="hidden text-sm text-slate-500 md:block">
+
               {today}
+
             </p>
 
           </Link>
@@ -75,7 +89,7 @@ export default function StudentTopbar({
 
         {/* Right */}
 
-        <div className="flex items-center gap-4">
+        <div className="flex min-w-0 items-center gap-2 sm:gap-3 lg:gap-4">
 
           {/* Notifications */}
 
@@ -91,10 +105,10 @@ export default function StudentTopbar({
 
           <Link
             to="/dashboard/profile"
-            className="hidden rounded-2xl px-3 py-2 text-right transition-all duration-300 hover:bg-slate-100 sm:block"
+            className="hidden max-w-[180px] rounded-2xl px-3 py-2 text-right transition hover:bg-slate-100 md:block"
           >
 
-            <h3 className="font-semibold text-slate-800">
+            <h3 className="truncate font-semibold text-slate-800">
 
               {loading
                 ? "Loading..."
@@ -102,7 +116,7 @@ export default function StudentTopbar({
 
             </h3>
 
-            <p className="text-sm text-slate-500">
+            <p className="truncate text-sm text-slate-500">
 
               {loading
                 ? "Loading..."
@@ -118,7 +132,7 @@ export default function StudentTopbar({
 
           <Link
             to="/dashboard/profile"
-            className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 text-lg font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
+            className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-blue-600 to-indigo-700 text-lg font-bold text-white shadow-md transition hover:scale-105"
           >
 
             {loading ? (
@@ -135,7 +149,9 @@ export default function StudentTopbar({
 
             ) : profile?.name ? (
 
-              profile.name.charAt(0).toUpperCase()
+              profile.name
+                .charAt(0)
+                .toUpperCase()
 
             ) : (
 
@@ -149,7 +165,8 @@ export default function StudentTopbar({
 
           <button
             onClick={handleLogout}
-            className="rounded-xl bg-red-600 p-3 text-white transition hover:bg-red-700"
+            className="rounded-xl bg-red-600 p-3 text-white transition hover:bg-red-700 active:scale-95"
+            title="Logout"
           >
 
             <LogOut size={18} />
@@ -161,5 +178,7 @@ export default function StudentTopbar({
       </div>
 
     </header>
+
   );
+
 }

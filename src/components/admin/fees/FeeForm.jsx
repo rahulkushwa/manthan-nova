@@ -433,7 +433,7 @@ if (isEdit) {
 
           </h3>
 
-          <div className="mt-6 grid gap-4 md:grid-cols-3">
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
 
             <div className="rounded-2xl bg-white p-4 shadow-sm">
 
@@ -493,9 +493,9 @@ if (isEdit) {
 
         </div>
 
-<div className="flex items-center justify-between gap-4 border-t border-slate-200 pt-6">
+<div className="flex flex-col gap-5 border-t border-slate-200 pt-6 sm:flex-row sm:items-center sm:justify-between">
 
-  <div>
+  <div className="text-center sm:text-left">
 
     <p className="text-sm text-slate-500">
       Fee Status
@@ -518,7 +518,7 @@ if (isEdit) {
   <button
     type="submit"
     disabled={loading}
-    className="rounded-2xl bg-blue-600 px-10 py-4 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+    className="w-full rounded-2xl bg-blue-600 px-8 py-4 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:px-10"
   >
     {loading
       ? "Saving..."

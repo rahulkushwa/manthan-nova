@@ -11,17 +11,14 @@ import { getFees } from "../../../services/feeService";
 
 export default function FeeHistory() {
   const [fees, setFees] = useState([]);
-  const [loading, setLoading] =
-    useState(true);
+  const [loading, setLoading] = useState(true);
 
-  const [search, setSearch] =
-    useState("");
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     async function loadFees() {
       try {
         const data = await getFees();
-
         setFees(data);
       } catch (err) {
         console.error(err);
@@ -33,56 +30,46 @@ export default function FeeHistory() {
     loadFees();
   }, []);
 
-  const filteredFees =
-    useMemo(() => {
-      const keyword = search
-        .toLowerCase()
-        .trim();
+  const filteredFees = useMemo(() => {
+    const keyword = search.toLowerCase().trim();
 
-      return fees.filter((fee) => {
-        return (
-          fee.studentName
-            ?.toLowerCase()
-            .includes(keyword) ||
-          fee.month
-            ?.toLowerCase()
-            .includes(keyword) ||
-          fee.status
-            ?.toLowerCase()
-            .includes(keyword) ||
-          fee.class
-            ?.toString()
-            .includes(keyword)
-        );
-      });
-    }, [fees, search]);
+    return fees.filter((fee) => {
+      return (
+        fee.studentName?.toLowerCase().includes(keyword) ||
+        fee.month?.toLowerCase().includes(keyword) ||
+        fee.status?.toLowerCase().includes(keyword) ||
+        fee.class?.toString().includes(keyword)
+      );
+    });
+  }, [fees, search]);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-5 sm:space-y-6 lg:space-y-8">
+
+      {/* Header */}
 
       <GlassPanel>
 
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
 
           <div>
 
-            <h1 className="text-4xl font-black">
-
+            <h1 className="text-3xl font-black sm:text-4xl">
               Fee History
-
             </h1>
 
-            <p className="mt-2 text-slate-500">
-
+            <p className="mt-2 text-sm text-slate-500 sm:text-base">
               View all fee transactions.
-
             </p>
 
           </div>
 
-          <div className="rounded-2xl bg-indigo-100 px-6 py-3 font-semibold text-indigo-700">
+          <div className="flex w-full items-center justify-center rounded-2xl bg-indigo-100 px-5 py-3 font-semibold text-indigo-700 sm:w-auto">
 
-            <CalendarDays size={18} className="inline mr-2" />
+            <CalendarDays
+              size={18}
+              className="mr-2"
+            />
 
             {filteredFees.length} Records
 
@@ -91,6 +78,8 @@ export default function FeeHistory() {
         </div>
 
       </GlassPanel>
+
+      {/* Search */}
 
       <GlassPanel>
 
@@ -108,12 +97,14 @@ export default function FeeHistory() {
               setSearch(e.target.value)
             }
             placeholder="Search fee history..."
-            className="w-full rounded-2xl border border-slate-300 py-3 pl-12 pr-4 outline-none transition focus:border-blue-600"
+            className="w-full rounded-2xl border border-slate-300 py-3.5 pl-12 pr-4 text-sm outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100 sm:text-base"
           />
 
         </div>
 
       </GlassPanel>
+
+      {/* Table */}
 
       <FeeTable
         fees={filteredFees}

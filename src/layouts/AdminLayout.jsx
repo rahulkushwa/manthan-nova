@@ -6,22 +6,28 @@ import Topbar from "../components/dashboard/Topbar";
 
 import { FeesProvider } from "../context/FeesContext";
 
+import PageContainer from "../components/common/PageContainer";
+
 export default function AdminLayout() {
+
   const [sidebarOpen, setSidebarOpen] =
     useState(false);
 
   const location = useLocation();
 
   useEffect(() => {
+
     setSidebarOpen(false);
+
   }, [location.pathname]);
 
   return (
+
     <FeesProvider>
 
-      <div className="min-h-screen bg-slate-100">
+      <div className="relative min-h-screen overflow-x-hidden bg-slate-100">
 
-        {/* Floating Background */}
+        {/* Background */}
 
         <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
 
@@ -42,9 +48,9 @@ export default function AdminLayout() {
           }
         />
 
-        {/* Main */}
+        {/* Main Content */}
 
-        <div className="lg:ml-80">
+        <div className="min-w-0 lg:ml-80">
 
           <Topbar
             onMenuClick={() =>
@@ -52,9 +58,13 @@ export default function AdminLayout() {
             }
           />
 
-          <main className="min-h-screen px-4 pb-8 pt-24 sm:px-6 lg:px-8">
+          <main className="min-h-screen pt-20">
 
-            <Outlet />
+            <PageContainer className="pb-8">
+
+              <Outlet />
+
+            </PageContainer>
 
           </main>
 
@@ -63,5 +73,7 @@ export default function AdminLayout() {
       </div>
 
     </FeesProvider>
+
   );
+
 }

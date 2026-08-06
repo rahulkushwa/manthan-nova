@@ -164,32 +164,45 @@ return;
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-5 sm:space-y-6 lg:space-y-8">
 
       {/* Header */}
 
       <GlassPanel>
 
-        <h1 className="text-4xl font-black">
+  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+
+    <div>
+
+      <h1 className="text-3xl font-black sm:text-4xl">
 
           Record Payment
 
         </h1>
 
-        <p className="mt-2 text-slate-500">
+        <p className="mt-2 text-sm text-slate-500 sm:text-base">
 
-          Add a new payment for this
-          student's fee.
+  Add a new payment for this student's fee.
 
-        </p>
+</p>
 
-      </GlassPanel>
+    </div>
+
+    <div className="flex w-full items-center justify-center rounded-2xl bg-emerald-100 px-5 py-3 font-semibold text-emerald-700 sm:w-auto">
+
+      Payment
+
+    </div>
+
+  </div>
+
+</GlassPanel>
 
       {/* Student Details */}
 
       <GlassPanel>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 
           <div>
 
@@ -261,7 +274,7 @@ return;
 
       {/* Summary */}
 
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
 
         <GlassPanel>
 
@@ -402,7 +415,7 @@ return;
 
             </h3>
 
-            <div className="mt-6 grid gap-4 md:grid-cols-3">
+            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
 
               <div>
 
@@ -465,14 +478,17 @@ return;
 
           </div>
 
-          <Button
-            type="submit"
-            loading={saving}
-          >
+          <div className="pt-2">
 
-            Record Payment
+  <Button
+    type="submit"
+    loading={saving}
+    className="w-full sm:w-auto"
+  >
+    Record Payment
+  </Button>
 
-          </Button>
+</div>
 
         </form>
 

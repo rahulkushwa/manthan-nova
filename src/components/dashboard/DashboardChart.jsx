@@ -19,31 +19,116 @@ const data = [
 
 export default function DashboardChart() {
   return (
-    <div className="rounded-3xl bg-white p-8 shadow-lg">
-      <h2 className="mb-6 text-2xl font-bold">
-        Student Growth
-      </h2>
+    <div className="rounded-3xl bg-white p-5 shadow-lg sm:p-6 lg:p-8">
 
-      <div className="h-80">
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
+      <div className="mb-5 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
 
-            <XAxis dataKey="month" />
+        <div>
 
-            <YAxis />
+          <h2 className="text-xl font-bold sm:text-2xl">
+            Student Growth
+          </h2>
 
-            <Tooltip />
+          <p className="text-sm text-slate-500">
+            Monthly student enrollment overview
+          </p>
+
+        </div>
+
+      </div>
+
+      <div className="h-64 sm:h-72 lg:h-80">
+
+        <ResponsiveContainer
+          width="100%"
+          height="100%"
+        >
+
+          <AreaChart
+            data={data}
+            margin={{
+              top: 10,
+              right: 10,
+              left: -20,
+              bottom: 0,
+            }}
+          >
+
+            <defs>
+
+              <linearGradient
+                id="studentGradient"
+                x1="0"
+                y1="0"
+                x2="0"
+                y2="1"
+              >
+
+                <stop
+                  offset="5%"
+                  stopColor="#2563eb"
+                  stopOpacity={0.45}
+                />
+
+                <stop
+                  offset="95%"
+                  stopColor="#2563eb"
+                  stopOpacity={0.05}
+                />
+
+              </linearGradient>
+
+            </defs>
+
+            <CartesianGrid
+              strokeDasharray="3 3"
+              stroke="#e2e8f0"
+            />
+
+            <XAxis
+              dataKey="month"
+              tick={{
+                fontSize: 12,
+              }}
+              tickLine={false}
+              axisLine={false}
+            />
+
+            <YAxis
+              tick={{
+                fontSize: 12,
+              }}
+              tickLine={false}
+              axisLine={false}
+              width={35}
+            />
+
+            <Tooltip
+              contentStyle={{
+                borderRadius: "14px",
+                border: "none",
+                boxShadow:
+                  "0 10px 30px rgba(0,0,0,.12)",
+              }}
+            />
 
             <Area
               type="monotone"
               dataKey="students"
               stroke="#2563eb"
-              fill="#93c5fd"
+              strokeWidth={3}
+              fill="url(#studentGradient)"
+              activeDot={{
+                r: 6,
+              }}
             />
+
           </AreaChart>
+
         </ResponsiveContainer>
+
       </div>
+
     </div>
   );
 }

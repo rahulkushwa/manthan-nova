@@ -1,5 +1,12 @@
-import { Outlet, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import {
+  Outlet,
+  useLocation,
+} from "react-router-dom";
+
+import {
+  useEffect,
+  useState,
+} from "react";
 
 import Sidebar from "../components/dashboard/Sidebar";
 import StudentTopbar from "../components/dashboard/StudentTopbar";
@@ -8,26 +15,32 @@ import { StudentProfileProvider } from "../context/StudentProfileContext";
 import { StudentDashboardProvider } from "../context/StudentDashboardContext";
 import { FeesProvider } from "../context/FeesContext";
 
+import PageContainer from "../components/common/PageContainer";
+
 export default function DashboardLayout() {
+
   const [sidebarOpen, setSidebarOpen] =
     useState(false);
 
   const location = useLocation();
 
   useEffect(() => {
+
     setSidebarOpen(false);
+
   }, [location.pathname]);
 
   return (
+
     <StudentProfileProvider>
 
       <StudentDashboardProvider>
 
         <FeesProvider>
 
-          <div className="min-h-screen bg-slate-100">
+          <div className="relative min-h-screen overflow-x-hidden bg-slate-100">
 
-            {/* Floating Background */}
+            {/* Background */}
 
             <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
 
@@ -50,7 +63,7 @@ export default function DashboardLayout() {
 
             {/* Main */}
 
-            <div className="lg:ml-80">
+            <div className="min-w-0 lg:ml-80">
 
               <StudentTopbar
                 onMenuClick={() =>
@@ -58,9 +71,13 @@ export default function DashboardLayout() {
                 }
               />
 
-              <main className="min-h-screen px-4 pb-8 pt-24 sm:px-6 lg:px-8">
+              <main className="min-h-screen pt-20">
 
-                <Outlet />
+                <PageContainer className="pb-8">
+
+                  <Outlet />
+
+                </PageContainer>
 
               </main>
 
@@ -73,5 +90,7 @@ export default function DashboardLayout() {
       </StudentDashboardProvider>
 
     </StudentProfileProvider>
+
   );
+
 }

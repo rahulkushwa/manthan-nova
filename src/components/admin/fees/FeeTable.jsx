@@ -43,7 +43,7 @@ export default function FeeTable({
   return (
     <GlassPanel className="overflow-hidden p-0">
 
-      {/* Desktop */}
+      {/* ================= Desktop ================= */}
 
       <div className="hidden overflow-x-auto lg:block">
 
@@ -155,12 +155,12 @@ export default function FeeTable({
                 <td className="px-6 py-5">
 
                   <div className="flex justify-center gap-2">
-                                        {fee.status !== "Paid" && (
+
+                    {fee.status !== "Paid" && (
 
                       <Link
                         to={`/admin/fees/payment/${fee.id}`}
                         className="rounded-xl bg-emerald-600 p-2 text-white transition hover:bg-emerald-700"
-                        title="Record Payment"
                       >
 
                         <CreditCard size={18} />
@@ -172,7 +172,6 @@ export default function FeeTable({
                     <Link
                       to={`/admin/fees/edit/${fee.id}`}
                       className="rounded-xl bg-blue-600 p-2 text-white transition hover:bg-blue-700"
-                      title="Edit Fee"
                     >
 
                       <Pencil size={18} />
@@ -180,12 +179,10 @@ export default function FeeTable({
                     </Link>
 
                     <button
-                      type="button"
                       onClick={() =>
                         onDelete(fee.id)
                       }
                       className="rounded-xl bg-red-600 p-2 text-white transition hover:bg-red-700"
-                      title="Delete Fee"
                     >
 
                       <Trash2 size={18} />
@@ -193,20 +190,22 @@ export default function FeeTable({
                     </button>
 
                     <Link
-  to={`/admin/fees/receipt/${fee.id}`}
-  className="rounded-xl bg-amber-600 p-2 text-white transition hover:bg-amber-700"
-  title="Receipt"
->
-  <Receipt size={18} />
-</Link>
+                      to={`/admin/fees/receipt/${fee.id}`}
+                      className="rounded-xl bg-amber-600 p-2 text-white transition hover:bg-amber-700"
+                    >
 
-<Link
-  to="/admin/fees/history"
-  className="rounded-xl bg-slate-700 p-2 text-white transition hover:bg-slate-800"
-  title="History"
->
-  <Eye size={18} />
-</Link>
+                      <Receipt size={18} />
+
+                    </Link>
+
+                    <Link
+                      to="/admin/fees/history"
+                      className="rounded-xl bg-slate-700 p-2 text-white transition hover:bg-slate-800"
+                    >
+
+                      <Eye size={18} />
+
+                    </Link>
 
                   </div>
 
@@ -222,22 +221,23 @@ export default function FeeTable({
 
       </div>
 
-      {/* Mobile */}
-
-      <div className="space-y-4 p-4 lg:hidden">
+      {/* ================= Mobile ================= */}
+            <div className="space-y-4 p-4 lg:hidden">
 
         {fees.map((fee) => (
 
           <div
             key={fee.id}
-            className="rounded-2xl border border-slate-200 bg-white p-5"
+            className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
           >
 
-            <div className="flex items-start justify-between">
+            {/* Header */}
 
-              <div>
+            <div className="flex items-start justify-between gap-4">
 
-                <h3 className="text-lg font-bold">
+              <div className="min-w-0">
+
+                <h3 className="truncate text-lg font-bold">
 
                   {fee.studentName}
 
@@ -258,7 +258,7 @@ export default function FeeTable({
               </div>
 
               <span
-                className={`rounded-full px-3 py-1 text-xs font-semibold ${getStatusColor(
+                className={`shrink-0 rounded-full px-3 py-1 text-xs font-semibold ${getStatusColor(
                   fee.status
                 )}`}
               >
@@ -269,9 +269,11 @@ export default function FeeTable({
 
             </div>
 
-            <div className="mt-5 grid grid-cols-3 gap-4">
+            {/* Amounts */}
 
-              <div>
+            <div className="mt-5 grid grid-cols-3 gap-3 rounded-2xl bg-slate-50 p-4">
+
+              <div className="text-center">
 
                 <p className="text-xs text-slate-500">
 
@@ -279,17 +281,15 @@ export default function FeeTable({
 
                 </p>
 
-                <p className="font-semibold">
+                <p className="mt-1 font-bold">
 
-                  {formatCurrency(
-                    fee.totalAmount
-                  )}
+                  {formatCurrency(fee.totalAmount)}
 
                 </p>
 
               </div>
 
-              <div>
+              <div className="text-center">
 
                 <p className="text-xs text-slate-500">
 
@@ -297,17 +297,15 @@ export default function FeeTable({
 
                 </p>
 
-                <p className="font-semibold text-green-600">
+                <p className="mt-1 font-bold text-green-600">
 
-                  {formatCurrency(
-                    fee.paidAmount
-                  )}
+                  {formatCurrency(fee.paidAmount)}
 
                 </p>
 
               </div>
 
-              <div>
+              <div className="text-center">
 
                 <p className="text-xs text-slate-500">
 
@@ -315,11 +313,9 @@ export default function FeeTable({
 
                 </p>
 
-                <p className="font-semibold text-red-600">
+                <p className="mt-1 font-bold text-red-600">
 
-                  {formatCurrency(
-                    fee.dueAmount
-                  )}
+                  {formatCurrency(fee.dueAmount)}
 
                 </p>
 
@@ -327,68 +323,93 @@ export default function FeeTable({
 
             </div>
 
-            <div className="mt-5 flex items-center justify-between">
+            {/* Payment */}
 
-              <span className="text-sm text-slate-500">
+            <div className="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+
+              <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+
+                Payment Method
+
+              </p>
+
+              <p className="mt-1 font-semibold text-slate-800">
 
                 {fee.paymentMode || "--"}
 
-              </span>
+              </p>
 
-              <div className="flex gap-2">                {fee.status !== "Paid" && (
+            </div>
 
+            {/* Actions */}
+
+            
+
+            <div className="mt-5 grid grid-cols-2 gap-3">
+
+              {fee.status !== "Paid" ? (
+                <>
                   <Link
                     to={`/admin/fees/payment/${fee.id}`}
-                    className="rounded-xl bg-emerald-600 p-2 text-white transition hover:bg-emerald-700"
-                    title="Record Payment"
+                    className="flex h-12 items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 font-medium text-emerald-700 transition hover:bg-emerald-100"
                   >
-
                     <CreditCard size={18} />
-
+                    Pay
                   </Link>
 
-                )}
+                  <Link
+                    to={`/admin/fees/edit/${fee.id}`}
+                    className="flex h-12 items-center justify-center gap-2 rounded-xl border border-blue-200 bg-blue-50 font-medium text-blue-700 transition hover:bg-blue-100"
+                  >
+                    <Pencil size={18} />
+                    Edit
+                  </Link>
 
-                <Link
-                  to={`/admin/fees/edit/${fee.id}`}
-                  className="rounded-xl bg-blue-600 p-2 text-white transition hover:bg-blue-700"
-                  title="Edit Fee"
-                >
+                  <button
+                    type="button"
+                    onClick={() => onDelete(fee.id)}
+                    className="flex h-12 items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 font-medium text-red-700 transition hover:bg-red-100"
+                  >
+                    <Trash2 size={18} />
+                    Delete
+                  </button>
 
-                  <Pencil size={18} />
+                  <Link
+                    to={`/admin/fees/receipt/${fee.id}`}
+                    className="flex h-12 items-center justify-center gap-2 rounded-xl border border-amber-200 bg-amber-50 font-medium text-amber-700 transition hover:bg-amber-100"
+                  >
+                    <Receipt size={18} />
+                    Receipt
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to={`/admin/fees/edit/${fee.id}`}
+                    className="flex h-12 items-center justify-center gap-2 rounded-xl border border-blue-200 bg-blue-50 font-medium text-blue-700 transition hover:bg-blue-100"
+                  >
+                    <Pencil size={18} />
+                    Edit
+                  </Link>
 
-                </Link>
+                  <Link
+                    to={`/admin/fees/receipt/${fee.id}`}
+                    className="flex h-12 items-center justify-center gap-2 rounded-xl border border-amber-200 bg-amber-50 font-medium text-amber-700 transition hover:bg-amber-100"
+                  >
+                    <Receipt size={18} />
+                    Receipt
+                  </Link>
 
-                <button
-                  type="button"
-                  onClick={() =>
-                    onDelete(fee.id)
-                  }
-                  className="rounded-xl bg-red-600 p-2 text-white transition hover:bg-red-700"
-                  title="Delete Fee"
-                >
-
-                  <Trash2 size={18} />
-
-                </button>
-
-                <Link
-  to={`/admin/fees/receipt/${fee.id}`}
-  className="rounded-xl bg-amber-600 p-2 text-white"
-  title="Receipt"
->
-  <Receipt size={18} />
-</Link>
-
-<Link
-  to="/admin/fees/history"
-  className="rounded-xl bg-slate-700 p-2 text-white"
-  title="History"
->
-  <Eye size={18} />
-</Link>
-
-              </div>
+                  <button
+                    type="button"
+                    onClick={() => onDelete(fee.id)}
+                    className="col-span-2 flex h-12 items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 font-medium text-red-700 transition hover:bg-red-100"
+                  >
+                    <Trash2 size={18} />
+                    Delete
+                  </button>
+                </>
+              )}
 
             </div>
 
@@ -399,5 +420,7 @@ export default function FeeTable({
       </div>
 
     </GlassPanel>
+
   );
+
 }

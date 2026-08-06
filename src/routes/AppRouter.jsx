@@ -33,8 +33,8 @@ import StudentHomework from "../pages/student/Homework";
 import StudentAnnouncements from "../pages/student/Announcements";
 import Profile from "../pages/student/Profile";
 
-import StudentFees from "../pages/student/Fees/Fees";
-import PaymentHistory from "../pages/student/Fees/PaymentHistory";
+import StudentFees from "../pages/student/fees/Fees";
+import PaymentHistory from "../pages/student/fees/PaymentHistory";
 
 // ================= ADMIN =================
 
@@ -56,14 +56,13 @@ import Announcements from "../pages/admin/Announcements";
 
 // ================= FEES =================
 
-import FeesDashboard from "../pages/admin/Fees/Dashboard";
-import AddFee from "../pages/admin/Fees/AddFee";
-import ManageFees from "../pages/admin/Fees/ManageFees";
-import EditFee from "../pages/admin/Fees/EditFee";
-import FeeHistory from "../pages/admin/Fees/FeeHistory";
-import RecordPayment from "../pages/admin/Fees/RecordPayment";
-import FeeReceipt from "../pages/admin/Fees/FeeReceipt";
-
+import FeesDashboard from "../pages/admin/fees/Dashboard";
+import AddFee from "../pages/admin/fees/AddFee";
+import ManageFees from "../pages/admin/fees/ManageFees";
+import EditFee from "../pages/admin/fees/EditFee";
+import FeeHistory from "../pages/admin/fees/FeeHistory";
+import RecordPayment from "../pages/admin/fees/RecordPayment";
+import FeeReceipt from "../pages/admin/fees/FeeReceipt";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>

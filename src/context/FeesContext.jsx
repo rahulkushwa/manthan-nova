@@ -5,19 +5,19 @@ import {
   useState,
 } from "react";
 
-import { getFees } from "../services/feeService";
+import {
+  getFees,
+  getStudentFees,
+} from "../services/feeService";
 
-const FeesContext =
-  createContext(null);
+const FeesContext = createContext(null);
 
 export function FeesProvider({
   children,
 }) {
-  const [fees, setFees] =
-    useState([]);
+  const [fees, setFees] = useState([]);
 
-  const [loading, setLoading] =
-    useState(true);
+  const [loading, setLoading] = useState(true);
 
   async function refreshFees() {
     try {
@@ -33,6 +33,15 @@ export function FeesProvider({
     }
   }
 
+  async function refreshStudentFees(studentId) {
+    try {
+      return await getStudentFees(studentId);
+    } catch (err) {
+      console.error(err);
+      return [];
+    }
+  }
+
   useEffect(() => {
     refreshFees();
   }, []);
@@ -43,6 +52,7 @@ export function FeesProvider({
         fees,
         loading,
         refreshFees,
+        refreshStudentFees,
         setFees,
       }}
     >
@@ -52,8 +62,7 @@ export function FeesProvider({
 }
 
 export function useFees() {
-  const context =
-    useContext(FeesContext);
+  const context = useContext(FeesContext);
 
   if (!context) {
     throw new Error(

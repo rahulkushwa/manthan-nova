@@ -126,9 +126,8 @@ useEffect(() => {
       setLoading(true);
 
       const payload = {
-        studentId: student.id,
-        studentName:
-          student.name,
+  studentId: student.uid,
+  studentName: student.name,
 
         class: student.class,
 

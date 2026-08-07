@@ -63,6 +63,8 @@ import EditFee from "../pages/admin/fees/EditFee";
 import FeeHistory from "../pages/admin/fees/FeeHistory";
 import RecordPayment from "../pages/admin/fees/RecordPayment";
 import FeeReceipt from "../pages/admin/fees/FeeReceipt";
+
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>

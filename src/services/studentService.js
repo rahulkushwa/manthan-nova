@@ -23,9 +23,7 @@ export async function addStudent(student) {
     collection(db, "students"),
     {
       ...studentData,
-
       firstLogin: true,
-
       createdAt: serverTimestamp(),
     }
   );
@@ -76,7 +74,24 @@ export async function updateStudent(
 }
 
 export async function deleteStudent(id) {
-  await deleteDoc(
-    doc(db, "students", id)
-  );
+  // Get student before deleting
+  const studentRef = doc(db, "students", id);
+  const studentSnapshot = await getDoc(studentRef);
+
+  if (!studentSnapshot.exists()) {
+    throw new Error("Student not found.");
+  }
+
+  const studentData = studentSnapshot.data();
+  const uid = studentData.uid;
+
+  // Delete users/{uid}
+  if (uid) {
+    await deleteDoc(
+      doc(db, "users", uid)
+    );
+  }
+
+  // Delete students/{studentId}
+  await deleteDoc(studentRef);
 }

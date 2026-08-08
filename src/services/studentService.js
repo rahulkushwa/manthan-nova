@@ -14,11 +14,21 @@ import {
 import { db } from "../firebase/firestore";
 
 export async function addStudent(student) {
-  await addDoc(collection(db, "students"), {
-    ...student,
-    uid: student.uid,
-    createdAt: serverTimestamp(),
-  });
+  const {
+    temporaryPassword,
+    ...studentData
+  } = student;
+
+  await addDoc(
+    collection(db, "students"),
+    {
+      ...studentData,
+
+      firstLogin: true,
+
+      createdAt: serverTimestamp(),
+    }
+  );
 }
 
 export async function getStudents() {
@@ -50,10 +60,18 @@ export async function getStudent(id) {
   };
 }
 
-export async function updateStudent(id, data) {
+export async function updateStudent(
+  id,
+  data
+) {
+  const {
+    temporaryPassword,
+    ...studentData
+  } = data;
+
   await updateDoc(
     doc(db, "students", id),
-    data
+    studentData
   );
 }
 

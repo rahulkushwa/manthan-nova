@@ -1,19 +1,30 @@
 import {
   createUserWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 
-import auth from "../firebase/auth";
+import { secondaryAuth } from "../firebase/auth";
 
+/**
+ * Creates a Firebase Authentication account
+ * without affecting the currently logged-in admin.
+ */
 export async function createStudentAccount(
-  email,
-  password
+  loginEmail,
+  temporaryPassword
 ) {
   const credential =
     await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
+      secondaryAuth,
+      loginEmail,
+      temporaryPassword
     );
 
-  return credential.user;
+  const user = credential.user;
+
+  // Sign out only from the secondary auth instance.
+  // The admin remains logged in on the main auth instance.
+  await signOut(secondaryAuth);
+
+  return user;
 }

@@ -83,7 +83,7 @@ export default function Dashboard() {
 
       {/* Hero */}
 
-      <div className="relative overflow-hidden rounded-[36px] bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900 p-10 text-white shadow-2xl">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900 p-5 text-white shadow-2xl sm:rounded-[36px] sm:p-8 lg:p-10">
 
         <div className="absolute -right-16 -top-16 h-72 w-72 rounded-full bg-blue-500/20 blur-[120px]" />
 
@@ -91,45 +91,45 @@ export default function Dashboard() {
 
         <div className="relative z-10">
 
-          <p className="text-sm uppercase tracking-[0.3em] text-blue-200">
+          <p className="text-xs uppercase tracking-[0.2em] text-blue-200 sm:text-sm sm:tracking-[0.3em]">
             Student Portal
           </p>
 
-          <h1 className="mt-4 text-5xl font-black">
+          <h1 className="mt-3 text-3xl font-black leading-tight sm:mt-4 sm:text-4xl lg:text-5xl">
             {greeting()} {profile?.name || "Student"} 👋
           </h1>
 
-          <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-200">
+          <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-200 sm:mt-5 sm:text-base sm:leading-8 lg:text-lg">
             Stay consistent. Small progress every day leads to big success.
           </p>
 
-          <div className="mt-10 flex flex-wrap gap-4">
+          <div className="mt-7 grid grid-cols-2 gap-3 sm:mt-10 sm:flex sm:flex-wrap sm:gap-4">
 
-            <div className="rounded-2xl bg-white/10 px-6 py-4 backdrop-blur-xl">
+           <div className="rounded-xl bg-emerald-400/10 px-4 py-2.5 backdrop-blur-xl sm:px-5 sm:py-3">
 
-              <p className="text-sm text-blue-200">
-                Class
-              </p>
+  <p className="text-xs font-medium text-emerald-200">
+    Class
+  </p>
 
-              <h3 className="mt-1 text-2xl font-bold">
-                {profile?.class || "-"}
-              </h3>
+  <h3 className="mt-0.5 text-lg font-bold text-emerald-100">
+    {profile?.class || "-"}
+  </h3>
 
-            </div>
+</div>
 
-            <div className="rounded-2xl bg-white/10 px-6 py-4 backdrop-blur-xl">
+            <div className="rounded-xl bg-emerald-400/10 px-4 py-2.5 backdrop-blur-xl sm:px-5 sm:py-3">
 
-              <p className="text-sm text-blue-200">
-                Board
-              </p>
+  <p className="text-xs font-medium text-emerald-200">
+    Board
+  </p>
 
-              <h3 className="mt-1 text-2xl font-bold">
-                {profile?.board || "-"}
-              </h3>
+  <h3 className="mt-0.5 text-lg font-bold text-emerald-100">
+    {profile?.board || "-"}
+  </h3>
 
-            </div>
+</div>
 
-            <div className="rounded-2xl bg-white/10 px-6 py-4 backdrop-blur-xl">
+            <div className="rounded-2xl bg-white/10 px-4 py-3 backdrop-blur-xl sm:px-6 sm:py-4">
 
   <p className="text-sm text-blue-200">
     My Notes
@@ -141,7 +141,7 @@ export default function Dashboard() {
 
 </div>
 
-<div className="rounded-2xl bg-white/10 px-6 py-4 backdrop-blur-xl">
+<div className="rounded-2xl bg-white/10 px-4 py-3 backdrop-blur-xl sm:px-6 sm:py-4">
 
   <p className="text-sm text-blue-200">
     Homework
@@ -167,7 +167,7 @@ export default function Dashboard() {
           Quick Access
         </h2>
 
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-3">
 
           {cards.map((card) => {
 
@@ -181,25 +181,25 @@ export default function Dashboard() {
                 className="group"
               >
 
-                <GlassCard className="h-full p-6">
+                <GlassCard className="h-full p-4 sm:p-6">
 
                   <div
-                    className={`flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r ${card.color} text-white shadow-lg transition group-hover:scale-110`}
+                    className={`flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r ${card.color} text-white shadow-lg transition duration-300 group-hover:scale-105 sm:h-16 sm:w-16 sm:rounded-2xl sm:group-hover:scale-110`}
                   >
 
                     <Icon size={30} />
 
                   </div>
 
-                  <h3 className="mt-6 text-2xl font-bold">
+                  <h3 className="mt-4 text-lg font-bold sm:mt-6 sm:text-2xl">
                     {card.title}
                   </h3>
 
-                  <p className="mt-2 text-slate-500">
+                  <p className="mt-1 text-xs text-slate-500 sm:mt-2 sm:text-base">
                     {card.description}
                   </p>
 
-                  <div className="mt-6 flex items-center gap-2 font-semibold text-blue-600">
+                  <div className="mt-4 flex items-center gap-1 text-sm font-semibold text-blue-600 sm:mt-6 sm:gap-2 sm:text-base">
 
                     Open
 
@@ -245,7 +245,7 @@ export default function Dashboard() {
 
               </h2>
 
-              <p className="mt-2 text-slate-500">
+              <p className="mt-2 text-sm text-slate-500 sm:text-base">
 
                 Recently uploaded study materials
 

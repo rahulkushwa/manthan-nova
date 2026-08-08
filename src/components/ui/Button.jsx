@@ -16,9 +16,8 @@ export default function Button({
     primary:
       "group relative overflow-hidden rounded-2xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-400 px-8 py-3.5 font-semibold text-slate-900 shadow-[0_12px_30px_rgba(245,158,11,.35)]",
 
-    secondary:
-      "group relative overflow-hidden rounded-2xl border border-white/25 bg-white/10 px-8 py-3.5 font-semibold text-white backdrop-blur-xl",
-  };
+  secondary:
+  "group relative overflow-hidden rounded-2xl border border-blue-200 bg-blue-100 px-8 py-3.5 font-semibold text-blue-700 shadow-sm transition-all duration-200 hover:bg-blue-200 hover:text-blue-800",};
 
   const content = (
     <motion.div
